@@ -1,0 +1,15 @@
+name: BuildBattle
+version: 0.1
+description: Gestion des builbattle de BuildersCoffee.
+author: Ketsu_sama
+main: eu.builderscoffee.expresso.ExpressoBukkit
+depend: [ API, Commons, PlotSquared ]
+commands:
+  game:
+    description: Gérer le build battle
+  jury:
+    description: Le menu jury
+  group:
+    description: Gestion de groupe
+  eplot:
+    description: Plot custom
