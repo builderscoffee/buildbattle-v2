@@ -1,10 +1,8 @@
 package eu.builderscoffee.expresso.commands;
 
-import com.intellectualcrafters.plot.api.PlotAPI;
-import com.intellectualcrafters.plot.object.Plot;
-import com.intellectualcrafters.plot.object.PlotPlayer;
-import com.intellectualcrafters.plot.util.MainUtil;
-import com.intellectualcrafters.plot.util.UUIDHandler;
+import com.plotsquared.core.PlotAPI;
+import com.plotsquared.core.plot.Plot;
+import com.plotsquared.core.util.MainUtil;
 import eu.builderscoffee.expresso.ExpressoBukkit;
 import eu.builderscoffee.expresso.configuration.SettingsConfiguration;
 import eu.builderscoffee.expresso.inventory.jury.JuryNotationInventory;

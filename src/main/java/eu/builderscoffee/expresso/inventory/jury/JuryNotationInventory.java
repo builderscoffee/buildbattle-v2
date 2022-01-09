@@ -1,7 +1,5 @@
 package eu.builderscoffee.expresso.inventory.jury;
 
-import com.intellectualcrafters.plot.object.Location;
-import com.intellectualcrafters.plot.object.Plot;
 import eu.builderscoffee.api.bukkit.gui.ClickableItem;
 import eu.builderscoffee.api.bukkit.gui.SmartInventory;
 import eu.builderscoffee.api.bukkit.gui.content.InventoryContents;
@@ -10,7 +8,6 @@ import eu.builderscoffee.api.bukkit.utils.ItemBuilder;
 import eu.builderscoffee.expresso.ExpressoBukkit;
 import eu.builderscoffee.expresso.buildbattle.notation.Notation;
 import eu.builderscoffee.expresso.utils.MessageUtils;
-import eu.builderscoffee.expresso.utils.PlotUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -31,24 +28,26 @@ public class JuryNotationInventory implements InventoryProvider {
     @Override
     public void init(Player player, InventoryContents contents) {
 
-        Location loc = PlotUtils.convertBukkitLoc(player.getLocation());
-        Plot plot = loc.getPlotAbs(); // On est sur qu'il y a un plot
+        //TODO Correct loc
+        //Location loc = PlotUtils.convertBukkitLoc(player.getLocation());
+        //Plot plot = loc.getPlotAbs(); // On est sur qu'il y a un plot
 
-        ClickableItem blackGlasses = ClickableItem.empty(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15));
+        ClickableItem blackGlasses = ClickableItem.empty(new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
         contents.fillRow(0, blackGlasses);
         contents.fillRow(3, blackGlasses);
 
         // Items montrant les catégories
 
-        contents.set(1, 2, ClickableItem.of(new ItemBuilder(Material.YELLOW_FLOWER).setName(MessageUtils.getMessageConfig(player).getMenu().getBeautyCategory()).build(),
+        contents.set(1, 2, ClickableItem.of(new ItemBuilder(Material.DANDELION).setName(MessageUtils.getMessageConfig(player).getMenu().getBeautyCategory()).build(),
                 e -> INVENTORY.close(player)));
         contents.set(1, 3, ClickableItem.of(new ItemBuilder(Material.PAINTING).setName(MessageUtils.getMessageConfig(player).getMenu().getCreativeCategory()).build(),
                 e -> INVENTORY.close(player)));
-        contents.set(1, 4, ClickableItem.of(new ItemBuilder(Material.SIGN).setName(MessageUtils.getMessageConfig(player).getMenu().getAmenagementCategory()).build(),
+        contents.set(1, 4, ClickableItem.of(new ItemBuilder(Material.OAK_SIGN).setName(MessageUtils.getMessageConfig(player).getMenu().getAmenagementCategory()).build(),
                 e -> INVENTORY.close(player)));
-        contents.set(1, 5, ClickableItem.of(new ItemBuilder(Material.WRITTEN_BOOK).setName(MessageUtils.getMessageConfig(player).getMenu().getFolkloreCategory().replace("%plot%", plot.getId().toString())).build(),
-                e -> INVENTORY.close(player)));
-        contents.set(1, 6, ClickableItem.of(new ItemBuilder(Material.RAW_FISH).setName(MessageUtils.getMessageConfig(player).getMenu().getFunCategory()).build(),
+        //TODO correct loc
+        // contents.set(1, 5, ClickableItem.of(new ItemBuilder(Material.WRITTEN_BOOK).setName(MessageUtils.getMessageConfig(player).getMenu().getFolkloreCategory().replace("%plot%", plot.getId().toString())).build(),
+        //       e -> INVENTORY.close(player)));
+        contents.set(1, 6, ClickableItem.of(new ItemBuilder(Material.TROPICAL_FISH).setName(MessageUtils.getMessageConfig(player).getMenu().getFunCategory()).build(),
                 e -> INVENTORY.close(player)));
 
         // Items montrant les points en caches
@@ -83,10 +82,11 @@ public class JuryNotationInventory implements InventoryProvider {
 
         // Valider les points du plot
 
-        contents.set(3, 4, ClickableItem.of(new ItemBuilder(Material.RAW_FISH).setName(MessageUtils.getMessageConfig(player).getMenu().getValidedNotationItem()).build(),
+        contents.set(3, 4, ClickableItem.of(new ItemBuilder(Material.TROPICAL_FISH).setName(MessageUtils.getMessageConfig(player).getMenu().getValidedNotationItem()).build(),
                 e -> {
                     Notation note = new Notation(player.getUniqueId());
-                    ExpressoBukkit.getBbGame().getNotationManager().addNotationInPlot(plot, note);
+                    //TODO correct loc
+                    //ExpressoBukkit.getBbGame().getNotationManager().addNotationInPlot(plot, note);
                     INVENTORY.close(player);
                 }));
     }

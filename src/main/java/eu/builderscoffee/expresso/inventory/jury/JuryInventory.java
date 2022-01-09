@@ -1,14 +1,13 @@
 package eu.builderscoffee.expresso.inventory.jury;
 
-import com.intellectualcrafters.plot.api.PlotAPI;
-import com.intellectualcrafters.plot.object.Plot;
+import com.plotsquared.core.PlotAPI;
+import com.plotsquared.core.plot.Plot;
 import eu.builderscoffee.api.bukkit.gui.ClickableItem;
 import eu.builderscoffee.api.bukkit.gui.SmartInventory;
 import eu.builderscoffee.api.bukkit.gui.content.*;
 import eu.builderscoffee.api.bukkit.utils.ItemBuilder;
 import eu.builderscoffee.expresso.ExpressoBukkit;
 import eu.builderscoffee.expresso.utils.MessageUtils;
-import eu.builderscoffee.expresso.utils.PlotUtils;
 import lombok.val;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -29,7 +28,7 @@ public class JuryInventory implements InventoryProvider {
             .manager(ExpressoBukkit.getInventoryManager())
             .build();
 
-    ClickableItem blackGlasses = ClickableItem.empty(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15));
+    ClickableItem blackGlasses = ClickableItem.empty(new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
 
     @Override
     public void init(Player player, InventoryContents contents) {
@@ -47,8 +46,9 @@ public class JuryInventory implements InventoryProvider {
             plotsItem[i] = ClickableItem.of(new ItemBuilder(Material.GRASS).setName(messages.getPlotItem().replace("%plot%", String.valueOf(i))).build(),
                     e -> {
                         Plot currentPlot = list.get(tempPlot);
-                        PlotUtils.convertPlotCenterLoc(currentPlot.getCenter());
-                        player.teleport(PlotUtils.convertPlotCenterLoc(currentPlot.getCenter()));
+                        //TODO Change plotutils.getPlot
+                        //PlotUtils.convertPlotCenterLoc(currentPlot.getCenter());
+                        //player.teleport(PlotUtils.convertPlotCenterLoc(currentPlot.getCenter()));
                     });
         }
 

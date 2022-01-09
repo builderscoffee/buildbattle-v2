@@ -38,6 +38,7 @@ public class GameConfig extends ConfigTemplate {
                 }
                 if (Objects.isNull(ExpressoBukkit.getInstance().getServer().getWorld(ExpressoBukkit.getSettings().getPlotWorldName()))) {
                     // Générer la map
+                    /*
                     new WorldBuilder.DefaultWorldBuilder()
                             .setBedrock(true)
                             .setPlotFilling(new ItemStack(Material.DIRT))
@@ -47,11 +48,12 @@ public class GameConfig extends ConfigTemplate {
                             .setRoadBlock(new ItemStack(Material.QUARTZ_BLOCK))
                             .setRoadHeight(64)
                             .setRoadWidth(7)
-                            .setWall(new ItemStack(Material.STONE_SLAB2))
+                            .setWall(new ItemStack(Material.STONE_SLAB))
                             .setWallClaimed(new ItemStack(Material.STONE_SLAB2, 1, (short) 2))
                             .setWallFilling(new ItemStack(Material.STONE))
                             .setWallHeight(64)
                             .generate(ExpressoBukkit.getSettings().getPlotWorldName());
+                     */
                 }
                 // Lancer la partie
                 ExpressoBukkit.getBbGame().setReady(true);
@@ -71,8 +73,8 @@ public class GameConfig extends ConfigTemplate {
                 // Envoyer le menu start
                 return redirect(StartConfig.class, response);
             case "worldbackup":
-                if (!BackupUtils.backupOfWorldExist(ExpressoBukkit.getSettings().getPlotWorldName(), ExpressoBukkit.getInstance().getServer().getServerName())) {
-                    BackupUtils.backupWorld(ExpressoBukkit.getSettings().getPlotWorldName(), ExpressoBukkit.getInstance().getServer().getServerName());
+                if (!BackupUtils.backupOfWorldExist(ExpressoBukkit.getSettings().getPlotWorldName(), ExpressoBukkit.getInstance().getServer().getName())) {
+                    BackupUtils.backupWorld(ExpressoBukkit.getSettings().getPlotWorldName(), ExpressoBukkit.getInstance().getServer().getName());
                     Log.get().info("Le monde à été backup");
                 }
                 break;
@@ -86,8 +88,8 @@ public class GameConfig extends ConfigTemplate {
         val itemsAction = new ServerManagerResponse.Items();
         itemsAction.setType("game");
 
-        itemsAction.addItem(2, 2, new ItemBuilder(Material.WOOL, 1, (short) 1).setName("§cStop").build(), "stop");
-        itemsAction.addItem(2, 4, new ItemBuilder(Material.WOOL, 1, (short) 6).setName("§7Pause").build(), "pause");
+        itemsAction.addItem(2, 2, new ItemBuilder(Material.RED_WOOL).setName("§cStop").build(), "stop");
+        itemsAction.addItem(2, 4, new ItemBuilder(Material.ORANGE_WOOL).setName("§7Pause").build(), "pause");
         itemsAction.addItem(2, 6, new ItemBuilder(Material.DROPPER, 1).setName("§6Reset").build(), "reset");
 
         // Add Action to response

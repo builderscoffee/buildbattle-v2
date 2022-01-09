@@ -59,7 +59,7 @@ public class PlotConfig extends ConfigTemplate {
 
         itemsAction.addItem(2, 2, new ItemBuilder(Material.NAME_TAG).setName("§aTaille").addLoreLine(Arrays.asList("§7Taille du plot " + plotSize, "", "§aClick gauche +1 ", "§aClick droit -1", "§aShift click gauche +10", "§aShift click droit -10")).build(), "size");
         itemsAction.addItem(2, 6, new ItemBuilder(Material.BARRIER).setName("§cBientot").build(), "commingsoon");
-        itemsAction.addItem(3, 4, new ItemBuilder(Material.WOOL, 1, (short) 13).setName("§aValider la génération").build(), "mapgen");
+        itemsAction.addItem(3, 4, new ItemBuilder(Material.GREEN_WOOL).setName("§aValider la génération").build(), "mapgen");
 
         // Add Action to response
         response.getActions().add(itemsAction);

@@ -16,7 +16,7 @@ public class StartConfig implements ConfigResponsible {
 
         itemsAction.setType("game");
         if (!ExpressoBukkit.getBbGame().getBbGameManager().isRunning() || ExpressoBukkit.getBbGame().isPaused()) {
-            itemsAction.addItem(2, 4, new ItemBuilder(Material.WOOL, 1, (short) 13).setName("§aDémarer").build(), "start");
+            itemsAction.addItem(2, 4, new ItemBuilder(Material.GREEN_WOOL).setName("§aDémarer").build(), "start");
 
             // Add Action to response
             response.getActions().add(itemsAction);

@@ -68,7 +68,7 @@ public class PhasesConfig extends ConfigTemplate {
                 .filter(phase -> !(phase instanceof EndPhase))
                 .forEach(phase -> itemsAction.addItem(2, 2 + i.incrementAndGet(), new ItemBuilder(phase.getIcon().getType()).setName("§a" + phase.getName()).addLoreLine(Arrays.asList("§bTemps:", "§bPar défault: §f" + TimeUtils.getDurationString(phase.getDefaultTime()), "§bCustom :§f" + TimeUtils.getDurationString(phase.getTime()))).build(), phase.getClass().getSimpleName()));
 
-        itemsAction.addItem(3, 4, new ItemBuilder(Material.WOOL, 1, (short) 13).setName("§aValider les phases").build(), "setplaytime");
+        itemsAction.addItem(3, 4, new ItemBuilder(Material.GREEN_WOOL).setName("§aValider les phases").build(), "setplaytime");
 
         // Add Action to response
         response.getActions().add(itemsAction);

@@ -1,7 +1,7 @@
 package eu.builderscoffee.expresso.inventory.jury;
 
-import com.intellectualcrafters.plot.api.PlotAPI;
-import com.intellectualcrafters.plot.object.Plot;
+import com.plotsquared.core.PlotAPI;
+import com.plotsquared.core.plot.Plot;
 import eu.builderscoffee.api.bukkit.gui.ClickableItem;
 import eu.builderscoffee.api.bukkit.gui.SmartInventory;
 import eu.builderscoffee.api.bukkit.gui.content.*;
@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-;
-
 public class JuryTeleportation implements InventoryProvider {
     public static final SmartInventory INVENTORY = SmartInventory.builder()
             .id("juryTeleporte")
@@ -30,7 +28,7 @@ public class JuryTeleportation implements InventoryProvider {
             .manager(ExpressoBukkit.getInventoryManager())
             .build();
 
-    ClickableItem blackGlasses = ClickableItem.empty(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 15));
+    ClickableItem blackGlasses = ClickableItem.empty(new ItemStack(Material.BLACK_STAINED_GLASS_PANE));
 
     @Override
     public void init(Player player, InventoryContents contents) {
@@ -49,14 +47,15 @@ public class JuryTeleportation implements InventoryProvider {
             if (ExpressoBukkit.getBbGame().getNotationManager().playerHasNote(currentPlot, player)) {
                 plotsItem[i] = ClickableItem.of(new ItemBuilder(Material.GRASS).addGLow().setName(messages.getPlotItem().replace("%plot%", String.valueOf(i))).build(),
                         e -> {
-                            PlotUtils.convertPlotCenterLoc(currentPlot.getCenter());
-                            player.teleport(PlotUtils.convertPlotCenterLoc(currentPlot.getCenter()));
+                    //TODO convert loc
+                            //PlotUtils.convertPlotCenterLoc(currentPlot.getCenter());
+                            //player.teleport(PlotUtils.convertPlotCenterLoc(currentPlot.getCenter()));
                         });
             } else {
                 plotsItem[i] = ClickableItem.of(new ItemBuilder(Material.GRASS).setName(messages.getPlotItem().replace("%plot%", String.valueOf(i))).build(),
                         e -> {
-                            PlotUtils.convertPlotCenterLoc(currentPlot.getCenter());
-                            player.teleport(PlotUtils.convertPlotCenterLoc(currentPlot.getCenter()));
+                            //PlotUtils.convertPlotCenterLoc(currentPlot.getCenter());
+                            //player.teleport(PlotUtils.convertPlotCenterLoc(currentPlot.getCenter()));
                         });
             }
         }
