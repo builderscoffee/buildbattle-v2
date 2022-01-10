@@ -106,11 +106,9 @@ public class PlotCommand implements CommandExecutor {
                 // Get plot
                 Plot plotinvtp = (PlotUtils.convertBukkitLoc(player.getLocation()).getPlotAbs());
                 int b = PlotUtils.getPlotsPos(plotinvtp) + 1;
-                Plot current = PlotUtils.getPlotsByPos(b);
-
-                // tp player
-                PlotUtils.convertPlotCenterLoc(current.getCenter());
-                player.teleport(PlotUtils.convertPlotCenterLoc(current.getCenter()));
+                PlotUtils.getPlotsByPos(b).getCenter(location ->
+                        // tp player
+                        player.teleport(PlotUtils.convertPlotCenterLoc(location)));
                 break;
                 /*
             case "schem":
