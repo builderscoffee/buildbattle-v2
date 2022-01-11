@@ -1,8 +1,8 @@
 package eu.builderscoffee.expresso.commands;
 
 import com.plotsquared.core.PlotAPI;
+import com.plotsquared.core.player.PlotPlayer;
 import com.plotsquared.core.plot.Plot;
-import com.plotsquared.core.util.MainUtil;
 import eu.builderscoffee.expresso.ExpressoBukkit;
 import eu.builderscoffee.expresso.configuration.SettingsConfiguration;
 import eu.builderscoffee.expresso.inventory.jury.JuryNotationInventory;
@@ -36,16 +36,21 @@ public class PlotCommand implements CommandExecutor {
 
     public static boolean argLength1(Player player, String cmd) {
         cmd = cmd.toLowerCase();
+        PlotPlayer plotPlayer = new PlotAPI().wrapPlayer(player.getUniqueId());
         switch (cmd) {
             case "info":
                 // Informations sur le plot
-                if (new PlotAPI().isInPlot(player)) {
+                if (plotPlayer.getLocation().isPlotArea()) {
                     val messages = MessageUtils.getMessageConfig(player);
-                    if (new PlotAPI().getPlot(player.getLocation()).canClaim(UUIDHandler.getPlayer(player.getUniqueId()))) {
-                        val plot = MainUtil.getPlotFromString(PlotPlayer.get(player.getName()), null, false);
-                        String name = MainUtil.getName(plot.owner);
+                    if (plotPlayer.getLocation().getPlot().canClaim(plotPlayer)) {
+                        //if (new PlotAPI().getPlot(player.getLocation()).canClaim(UUIDHandler.getPlayer(player.getUniqueId()))) {
+                        val plot = plotPlayer.getLocation().getPlot();
+                        //val plot = MainUtil.getPlotFromString(PlotPlayer.get(player.getName()), null, false);
+                        String name = new PlotAPI().wrapPlayer(plot.getOwner()).getName();
+                        //String name = MainUtil.getName(plot.owner);
                         List<String> membersList = new ArrayList<>();
-                        plot.getMembers().forEach(uuid -> membersList.add(UUIDHandler.getName(uuid)));
+                        //plot.getMembers().forEach(uuid -> membersList.add(UUIDHandler.getName(uuid)));
+                        plot.getMembers().forEach(uuid -> membersList.add(new PlotAPI().wrapPlayer(uuid).getName()));
                         player.sendMessage(messages.getCommand().getPlotInfoHeader());
                         player.sendMessage(messages.getCommand().getPlotInfoId().replace("%id%", String.valueOf(PlotUtils.getPlotsPos(plot))));
                         player.sendMessage(messages.getCommand().getPlotInfoOwner().replace("%owner%", name));
@@ -70,7 +75,7 @@ public class PlotCommand implements CommandExecutor {
                 break;
             case "invleo":
                 //checker
-                if (new PlotAPI().isInPlot(player)) {
+                if (new PlotAPI().wrapPlayer(player.getUniqueId()).getLocation().isPlotArea()) {
                     Plot plotinv = (PlotUtils.convertBukkitLoc(player.getLocation()).getPlotAbs());
                     if (!ExpressoBukkit.getBbGame().getNotationManager().playerHasNote(plotinv, player)) {
                         JuryNotationInventory.INVENTORY.open(player);
