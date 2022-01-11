@@ -24,7 +24,7 @@ public class WorldBuilder implements Listener {
     private final PlotAreaBuilder builder;
 
     @SneakyThrows
-    public WorldBuilder(String generator, WorldType worldType) {
+    public WorldBuilder(String generator, PlotAreaType worldType) {
         // Update generators
         PlotSquared.platform().setupUtils().updateGenerators(true);
 
@@ -37,10 +37,10 @@ public class WorldBuilder implements Listener {
         builder = PlotAreaBuilder.newBuilder();
 
         // Setting generator
-        builder.generatorName("PlotSquared");
+        builder.generatorName(generator);
 
         // Setting plot area type
-        builder.plotAreaType(PlotAreaType.NORMAL);
+        builder.plotAreaType(worldType);
 
         // Create node wrapper if not exist
         if (builder.settingsNodesWrapper() == null) {
@@ -109,13 +109,6 @@ public class WorldBuilder implements Listener {
         PlotSquared.platform().setupUtils().setupWorld(builder);
     }
 
-    public enum WorldType {
-        NORMAL,
-        AUGMENTED,
-        PARTIAL
-    }
-
-
     @Accessors(chain = true)
     @Getter
     @Setter
@@ -135,7 +128,7 @@ public class WorldBuilder implements Listener {
         private boolean hasBedrock = true;
 
         public DefaultWorldBuilder() {
-            super("Test", WorldType.NORMAL);
+            super("Test", PlotAreaType.NORMAL);
         }
 
         @Override
