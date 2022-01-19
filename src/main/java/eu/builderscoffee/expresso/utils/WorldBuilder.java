@@ -128,7 +128,7 @@ public class WorldBuilder implements Listener {
         private boolean hasBedrock = true;
 
         public DefaultWorldBuilder() {
-            super("Test", PlotAreaType.NORMAL);
+            super("PlotSquared", PlotAreaType.NORMAL);
         }
 
         @Override
