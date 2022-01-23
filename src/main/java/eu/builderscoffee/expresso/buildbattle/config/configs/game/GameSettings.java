@@ -13,8 +13,8 @@ public class GameSettings implements ConfigResponsible {
         val itemsAction = new ServerManagerResponse.Items();
         itemsAction.setType("game");
 
-        itemsAction.addItem(2, 2, new ItemBuilder(Material.WATCH).setName("§7Gestion de la partie").build(), "settings");
-        itemsAction.addItem(2, 6, new ItemBuilder(Material.WORKBENCH).setName("§7Utilitaire de la partie").build(), "utils");
+        itemsAction.addItem(2, 2, new ItemBuilder(Material.COMPASS).setName("§7Gestion de la partie").build(), "settings");
+        itemsAction.addItem(2, 6, new ItemBuilder(Material.CRAFTING_TABLE).setName("§7Utilitaire de la partie").build(), "utils");
 
         // Add Action to response
         response.getActions().add(itemsAction);

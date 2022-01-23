@@ -230,16 +230,14 @@ public class TeamManager {
                 receiver.sendMessage(messagesReceiver.getInvitation().getDenyTarget().replace("%sender%", sender.getName()));
             sender.sendMessage(messagesSender.getInvitation().getDenySender().replace("%target%", receiver.getName()));
             invitations.remove(invitation); // Clean l'invitation accepter
-        } else {
+        } else
             receiver.sendMessage(messagesReceiver.getInvitation().getNotAvaliable().replace("%sender%", sender.getName()));
-        }
     }
 
     /***
      * Retourne l'invitation envoyer à un joueur
      * @param sender - Joueur
      * @param receiver - Joueur
-     * @return
      */
     public Invitation getInvitation(Player sender, Player receiver) {
         return invitations.stream()
@@ -278,9 +276,7 @@ public class TeamManager {
     public void addMemberToAllPlot(Player player) {
         Team team = ExpressoBukkit.getBbGame().getTeamManager().getPlayerTeam(player);
         Set<Plot> plots = new PlotAPI().getPlayerPlots(Objects.requireNonNull(plotAPI.wrapPlayer(team.getLeader().getUniqueId())));
-        plots.forEach(plot -> {
-            plot.addTrusted(player.getUniqueId());
-        });
+        plots.forEach(plot -> plot.addTrusted(player.getUniqueId()));
     }
 
     /***
@@ -290,9 +286,7 @@ public class TeamManager {
     public void removeMemberFromAllPlot(Player player) {
         Team team = ExpressoBukkit.getBbGame().getTeamManager().getPlayerTeam(player);
         Set<Plot> plots = new PlotAPI().getPlayerPlots(Objects.requireNonNull(plotAPI.wrapPlayer(team.getLeader().getUniqueId())));
-        plots.forEach(plot -> {
-            plot.removeTrusted(player.getUniqueId());
-        });
+        plots.forEach(plot -> plot.removeTrusted(player.getUniqueId()));
     }
 
 }

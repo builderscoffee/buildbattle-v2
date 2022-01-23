@@ -3,7 +3,7 @@ import eu.builderscoffee.expresso.utils.Tuple;
 import eu.builderscoffee.expresso.utils.blocks.BlockData;
 import lombok.Getter;
 import lombok.Setter;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.*;
 import java.util.stream.Collectors;
