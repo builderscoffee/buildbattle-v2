@@ -20,9 +20,9 @@ public class TournamentScoreboard extends BaseBoard {
             val list = new ArrayList<String>();
             list.add(this.addSeparator());
             list.add("§aSaison : " + messages.getBoard().getSeasonName());
-            list.add("§aTournois : §f" + ExpressoBukkit.getBbGame().getBuildBattleGameType().getName());
+            list.add("§aTournois : §f" + ExpressoBukkit.getBuildBattle().getType().getName());
             list.add("§aThème : " + "§f§kLait");
-            list.add("§aTimer : §f" + TimeUtils.getDurationString(ExpressoBukkit.getBbGame().getBuildBattleGameType().getCurrentPhase().getTime() - ExpressoBukkit.getBbGame().getBuildBattleGameType().getCurrentPhase().getCurrentTime()));
+            list.add("§aTimer : §f" + TimeUtils.getDurationString(ExpressoBukkit.getBuildBattle().getType().getCurrentPhase().getTime() - ExpressoBukkit.getBuildBattle().getType().getCurrentPhase().getCurrentTime()));
             list.add(this.addBlank());
             list.add(this.addIp());
             list.add(this.addSeparator());
@@ -35,14 +35,14 @@ public class TournamentScoreboard extends BaseBoard {
             val list = new ArrayList<String>();
             list.add(this.addSeparator());
             list.add("§aSaison : " + messages.getBoard().getSeasonName());
-            list.add("§aTournois : §f" + ExpressoBukkit.getBbGame().getBuildBattleGameType().getName());
-            if (("§aThème : " + ExpressoBukkit.getBbGame().getBbGameManager().getTheme()).length() < 30)
-                list.add("§aThème : " + ExpressoBukkit.getBbGame().getBbGameManager().getTheme());
+            list.add("§aTournois : §f" + ExpressoBukkit.getBuildBattle().getType().getName());
+            if (("§aThème : " + ExpressoBukkit.getBuildBattle().getGameManager().getTheme()).length() < 30)
+                list.add("§aThème : " + ExpressoBukkit.getBuildBattle().getGameManager().getTheme());
             else {
                 list.add("§aThème : ");
-                list.add(ExpressoBukkit.getBbGame().getBbGameManager().getTheme());
+                list.add(ExpressoBukkit.getBuildBattle().getGameManager().getTheme());
             }
-            list.add("§aTimer : §f" + TimeUtils.getDurationString(ExpressoBukkit.getBbGame().getBuildBattleGameType().getCurrentPhase().getTime() - ExpressoBukkit.getBbGame().getBuildBattleGameType().getCurrentPhase().getCurrentTime()));
+            list.add("§aTimer : §f" + TimeUtils.getDurationString(ExpressoBukkit.getBuildBattle().getType().getCurrentPhase().getTime() - ExpressoBukkit.getBuildBattle().getType().getCurrentPhase().getCurrentTime()));
             list.add(this.addBlank());
             list.add(this.addIp());
             list.add(this.addSeparator());
@@ -55,12 +55,12 @@ public class TournamentScoreboard extends BaseBoard {
             val list = new ArrayList<String>();
             list.add(this.addSeparator());
             list.add("§aSaison : " + messages.getBoard().getSeasonName());
-            list.add("§aTournois : §f" + ExpressoBukkit.getBbGame().getBuildBattleGameType().getName());
-            if (("§aThème : " + ExpressoBukkit.getBbGame().getBbGameManager().getTheme()).length() < 30)
-                list.add("§aThème : " + ExpressoBukkit.getBbGame().getBbGameManager().getTheme());
+            list.add("§aTournois : §f" + ExpressoBukkit.getBuildBattle().getType().getName());
+            if (("§aThème : " + ExpressoBukkit.getBuildBattle().getGameManager().getTheme()).length() < 30)
+                list.add("§aThème : " + ExpressoBukkit.getBuildBattle().getGameManager().getTheme());
             else {
                 list.add("§aThème : ");
-                list.add(ExpressoBukkit.getBbGame().getBbGameManager().getTheme());
+                list.add(ExpressoBukkit.getBuildBattle().getGameManager().getTheme());
             }
             list.add("§cPartie finie");
             list.add(this.addBlank());

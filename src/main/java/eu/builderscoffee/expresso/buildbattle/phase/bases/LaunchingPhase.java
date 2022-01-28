@@ -2,9 +2,8 @@ package eu.builderscoffee.expresso.buildbattle.phase.bases;
 
 
 import eu.builderscoffee.api.bukkit.utils.ItemBuilder;
-import eu.builderscoffee.api.bukkit.utils.Title;
 import eu.builderscoffee.expresso.ExpressoBukkit;
-import eu.builderscoffee.expresso.buildbattle.BuildBattleManager;
+import eu.builderscoffee.expresso.buildbattle.GameState;
 import eu.builderscoffee.expresso.buildbattle.phase.BBPhase;
 import eu.builderscoffee.expresso.utils.MessageUtils;
 import eu.builderscoffee.expresso.utils.TimeUtils;
@@ -24,7 +23,7 @@ public class LaunchingPhase extends BBPhase {
         this.descriptions = Arrays.asList("Lancement de la partie");
         this.icons = new ItemBuilder(Material.FIREWORK_ROCKET).setName(name).build();
         this.unit = TimeUnit.SECONDS;
-        this.state = BuildBattleManager.GameState.LAUNCHING;
+        this.state = GameState.LAUNCHING;
         this.engine = null;
         this.defaultTime = defaultTime;
         this.time = defaultTime;
@@ -36,7 +35,7 @@ public class LaunchingPhase extends BBPhase {
             @Override
             public void run() {
                 // Checker si la partie est prête à démarrer ?
-                if (!ExpressoBukkit.getBbGame().isReady()) {
+                if (!ExpressoBukkit.getBuildBattle().isReady()) {
                     return;
                 }
                 // Lancer le chrono ( Title + Level )
@@ -54,7 +53,7 @@ public class LaunchingPhase extends BBPhase {
                 if (time < 1) {
                     ExpressoBukkit.getInstance().getServer().getOnlinePlayers().forEach(player -> player.sendMessage(MessageUtils.getMessageConfig(player).getGame().getCompetitionStarting().replace("%prefix%", MessageUtils.getDefaultMessageConfig().getPrefix())));
                     Bukkit.getOnlinePlayers().forEach(p -> p.playSound(p.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 20.0f, 20.0f));
-                    ExpressoBukkit.getBbGame().getBbGameManager().nextPhase();
+                    ExpressoBukkit.getBuildBattle().getGameManager().nextPhase();
                     return;
                 }
                 --time;

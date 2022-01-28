@@ -20,7 +20,7 @@ public class SingleThemeConfig extends ConfigTemplate {
     @Override
     public ServerManagerResponse request(ServerManagerRequest request, ServerManagerResponse response) {
         System.out.println(">> Request " + this.getClass().getSimpleName());
-        ExpressoBukkit.getBbGame().getBbGameManager().setTheme(request.getData()); //TODO Register BuildbattleThemeEntity
+        ExpressoBukkit.getBuildBattle().getGameManager().setTheme(request.getData()); //TODO Register BuildbattleThemeEntity
         return redirect(PlotConfig.class, response);
     }
 

@@ -22,7 +22,7 @@ public class ReflectionUtils {
                 .filter(loopClazz -> !Modifier.isAbstract(loopClazz.getModifiers()))
                 .map(loopClazz -> {
                     try {
-                        return loopClazz.newInstance();
+                        return loopClazz.getConstructor().newInstance();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

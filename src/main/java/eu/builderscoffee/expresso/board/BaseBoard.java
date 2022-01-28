@@ -32,11 +32,11 @@ public class BaseBoard {
         }
         fb = playerBoards.get(player.getUniqueId());
 
-        if (Objects.nonNull(ExpressoBukkit.getBbGame())
-                && Objects.nonNull(ExpressoBukkit.getBbGame().getBuildBattleGameType())
-                && Objects.nonNull(ExpressoBukkit.getBbGame().getBuildBattleGameType().getCurrentPhase())
-                && getBoards().containsKey(ExpressoBukkit.getBbGame().getBuildBattleGameType().getCurrentPhase().getClass())) {
-            fb.updateLines(getBoards().get(ExpressoBukkit.getBbGame().getBuildBattleGameType().getCurrentPhase().getClass()).apply(player));
+        if (Objects.nonNull(ExpressoBukkit.getBuildBattle())
+                && Objects.nonNull(ExpressoBukkit.getBuildBattle().getType())
+                && Objects.nonNull(ExpressoBukkit.getBuildBattle().getType().getCurrentPhase())
+                && getBoards().containsKey(ExpressoBukkit.getBuildBattle().getType().getCurrentPhase().getClass())) {
+            fb.updateLines(getBoards().get(ExpressoBukkit.getBuildBattle().getType().getCurrentPhase().getClass()).apply(player));
         } else {
             fb.updateLines(addBlank());
             fb.updateLines("§cY'a un soucis chef");

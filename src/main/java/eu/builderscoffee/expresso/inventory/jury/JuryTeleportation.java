@@ -8,7 +8,6 @@ import eu.builderscoffee.api.bukkit.gui.content.*;
 import eu.builderscoffee.api.bukkit.utils.ItemBuilder;
 import eu.builderscoffee.expresso.ExpressoBukkit;
 import eu.builderscoffee.expresso.utils.MessageUtils;
-import eu.builderscoffee.expresso.utils.PlotUtils;
 import lombok.val;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -44,7 +43,7 @@ public class JuryTeleportation implements InventoryProvider {
         for (int i = 0; i < plotsItem.length; i++) {
             int tempPlot = i;
             Plot currentPlot = list.get(tempPlot);
-            if (ExpressoBukkit.getBbGame().getNotationManager().playerHasNote(currentPlot, player)) {
+            if (ExpressoBukkit.getBuildBattle().getNotationManager().playerHasNote(currentPlot, player)) {
                 plotsItem[i] = ClickableItem.of(new ItemBuilder(Material.GRASS).addGLow().setName(messages.getPlotItem().replace("%plot%", String.valueOf(i))).build(),
                         e -> {
                     //TODO convert loc

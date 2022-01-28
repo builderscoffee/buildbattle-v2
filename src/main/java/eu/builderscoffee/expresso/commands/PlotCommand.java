@@ -77,7 +77,7 @@ public class PlotCommand implements CommandExecutor {
                 //checker
                 if (new PlotAPI().wrapPlayer(player.getUniqueId()).getLocation().isPlotArea()) {
                     Plot plotinv = (PlotUtils.convertBukkitLoc(player.getLocation()).getPlotAbs());
-                    if (!ExpressoBukkit.getBbGame().getNotationManager().playerHasNote(plotinv, player)) {
+                    if (!ExpressoBukkit.getBuildBattle().getNotationManager().playerHasNote(plotinv, player)) {
                         JuryNotationInventory.INVENTORY.open(player);
                     } else {
                         player.sendMessage(MessageUtils.getMessageConfig(player).getCommand().getPlotAlReadyNoted().replace("%prefix%", MessageUtils.getDefaultMessageConfig().getPrefix()));
@@ -90,7 +90,7 @@ public class PlotCommand implements CommandExecutor {
             case "seenote":
                 val messages = MessageUtils.getMessageConfig(player);
                 val plot = (PlotUtils.convertBukkitLoc(player.getLocation()).getPlotAbs());
-                val notationsByPlot = ExpressoBukkit.getBbGame().getNotationManager().getNotationsByPlot(plot);
+                val notationsByPlot = ExpressoBukkit.getBuildBattle().getNotationManager().getNotationsByPlot(plot);
                 if (notationsByPlot == null || notationsByPlot.isEmpty()) {
                     player.sendMessage(messages.getCommand().getPlotNotNoted().replace("%prefix%", MessageUtils.getDefaultMessageConfig().getPrefix()));
                     break;

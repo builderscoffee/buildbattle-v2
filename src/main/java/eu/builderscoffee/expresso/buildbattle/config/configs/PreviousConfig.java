@@ -25,6 +25,6 @@ public class PreviousConfig implements ConfigRequestable {
             redirect(responsible, response);
         }
 
-        return redirect(BuildbattleInstanceType.class, response);
+        return redirect(BuildbattleCategoryConfig.class, response);
     }
 }

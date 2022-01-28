@@ -11,8 +11,8 @@ public class CheckStartTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (ExpressoBukkit.getBbGame().getBbGameManager().getGame() != null) {
-            ExpressoBukkit.getBbGame().getBbGameManager().checkStart();
+        if (ExpressoBukkit.getBuildBattle() != null) {
+            ExpressoBukkit.getBuildBattle().getGameManager().checkStart();
         }
     }
 }

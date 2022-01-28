@@ -37,22 +37,6 @@ public class GameConfig extends ConfigTemplate {
                 }
                 if (Objects.isNull(ExpressoBukkit.getInstance().getServer().getWorld(ExpressoBukkit.getSettings().getPlotWorldName()))) {
                     // Générer la map
-                    /*
-                    new WorldBuilder.DefaultWorldBuilder()
-                            .setBedrock(true)
-                            .setPlotFilling(new ItemStack(Material.DIRT))
-                            .setPlotFloor(new ItemStack(Material.GRASS, 1))
-                            .setPlotHeight(64)
-                            .setPlotSize(getRequestable(PlotConfig.class).getPlotSize())
-                            .setRoadBlock(new ItemStack(Material.QUARTZ_BLOCK))
-                            .setRoadHeight(64)
-                            .setRoadWidth(7)
-                            .setWall(new ItemStack(Material.STONE_SLAB))
-                            .setWallClaimed(new ItemStack(Material.STONE_SLAB2, 1, (short) 2))
-                            .setWallFilling(new ItemStack(Material.STONE))
-                            .setWallHeight(64)
-                            .generate(ExpressoBukkit.getSettings().getPlotWorldName());
-                     */
                     Bukkit.getScheduler().runTask(ExpressoBukkit.getInstance(), () ->
                             new WorldBuilder.DefaultWorldBuilder()
                                     .setHasBedrock(true)
@@ -71,20 +55,20 @@ public class GameConfig extends ConfigTemplate {
                                     .setup(ExpressoBukkit.getSettings().getPlotWorldName()));
                 }
                 // Lancer la partie
-                ExpressoBukkit.getBbGame().setReady(true);
-                ExpressoBukkit.getBbGame().getBbGameManager().startGame();
+                ExpressoBukkit.getBuildBattle().setReady(true);
+                ExpressoBukkit.getBuildBattle().getGameManager().startGame();
                 return redirect(EndConfig.class, response);
             case "stop":
                 // Stopper la partie
-                if (ExpressoBukkit.getBbGame().isReady()) {
-                    ExpressoBukkit.getBbGame().getBbGameManager().cancelGame();
+                if (ExpressoBukkit.getBuildBattle().isReady()) {
+                    ExpressoBukkit.getBuildBattle().getGameManager().cancelGame();
                     //TODO Send message to server , fix console error
                 }
                 break;
             case "pause":
                 Log.get().info("Receive Pause Action");
                 // Mettre en pause la partie
-                ExpressoBukkit.getBbGame().getBbGameManager().PauseGame();
+                ExpressoBukkit.getBuildBattle().getGameManager().PauseGame();
                 // Envoyer le menu start
                 return redirect(StartConfig.class, response);
             case "worldbackup":

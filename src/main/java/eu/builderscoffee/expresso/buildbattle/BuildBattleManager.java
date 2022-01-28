@@ -1,13 +1,13 @@
 package eu.builderscoffee.expresso.buildbattle;
 
 import eu.builderscoffee.expresso.ExpressoBukkit;
-import eu.builderscoffee.expresso.buildbattle.games.expressos.ExpressoManager;
 import eu.builderscoffee.expresso.buildbattle.phase.BBPhase;
 import eu.builderscoffee.expresso.buildbattle.tasks.CheckStartTask;
 import eu.builderscoffee.expresso.utils.Log;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import lombok.val;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -17,15 +17,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class BuildBattleManager implements Cloneable {
 
-    // Instances
-    @Getter
-    private final ExpressoBukkit expressoBukkit;
-    @Getter
-    private final BuildBattle game;
-    // Managers
-    @Getter
-    @Setter
-    private ExpressoManager expressoManager;
     // Engines
     @Getter
     @Setter
@@ -45,31 +36,20 @@ public class BuildBattleManager implements Cloneable {
     @Setter
     private String theme;
 
-    public BuildBattleManager(final BuildBattle game) {
-        // Instances
-        this.expressoBukkit = ExpressoBukkit.getInstance();
-        this.game = game;
-        // Managers
-        setExpressoManager(game.getExpressoManager());
-        // Définir la phase par default
-        this.getGame().setGameState(GameState.WAITING);
-    }
-
-    // GAME MANAGEMENT
-
     /***
      * Lancer
      */
     public void startGame() {
         // La partie est prête à démarrer
-        ExpressoBukkit.getBbGame().setReady(true);
-        if (!ExpressoBukkit.getBbGame().isPaused()) {
+        ExpressoBukkit.getBuildBattle().setReady(true);
+        if (!ExpressoBukkit.getBuildBattle().isPaused()) {
             // Lancer la task de check
-            ExpressoBukkit.getExecutionManager().getTasks().put("checkstart", new CheckStartTask().runTaskTimer(expressoBukkit, 0L, 20L));
+            ExpressoBukkit.getExecutionManager().getTasks().put("checkstart", new CheckStartTask().runTaskTimer(ExpressoBukkit.getInstance(), 0L, 20L));
         } else {
             Log.get().info("Start Clone");
-            ExpressoBukkit.getBbGame().setPaused(false);
-            ExpressoBukkit.getBbGame().setBbGameManager((BuildBattleManager) ExpressoBukkit.getBbGame().getBbGameManagerClone());
+            ExpressoBukkit.getBuildBattle().setPaused(false);
+            // TODO Chech if clone is nessesary
+            //ExpressoBukkit.getBuildBattle().setBbGameManager((BuildBattleManager) ExpressoBukkit.getBuildBattle().getBbGameManagerClone());
         }
     }
 
@@ -89,15 +69,15 @@ public class BuildBattleManager implements Cloneable {
      * Retourne si la partie est prète à démarrer
      */
     public boolean shouldStart() {
-        return this.getGame().getGameState() == GameState.WAITING
-                && this.getGame().isReady();
+        return ExpressoBukkit.getBuildBattle().getState() == GameState.WAITING
+                && ExpressoBukkit.getBuildBattle().isReady();
     }
 
     /***
      * Check l'état de la partie
      */
     public boolean isRunning() {
-        return this.getGame().getGameState() != GameState.WAITING;
+        return ExpressoBukkit.getBuildBattle().getState() != GameState.WAITING;
     }
 
     /***
@@ -126,7 +106,7 @@ public class BuildBattleManager implements Cloneable {
      */
     public void endGame() {
         // Définir l'état de fin de la partie
-        this.getGame().setGameState(this.game.getBuildBattleGameType().getCurrentPhase().getState());
+        ExpressoBukkit.getBuildBattle().setState(ExpressoBukkit.getBuildBattle().getType().getCurrentPhase().getState());
         // Couper la phase en cours
         this.cancelPhase();
         // Désactiver les plugins de build
@@ -143,14 +123,14 @@ public class BuildBattleManager implements Cloneable {
         if (getCurrentTask() != null) {
             getCurrentTask().cancel();
         }
-        setCurrentTask(runnable.runTaskTimerAsynchronously(expressoBukkit, 0, 20));
+        setCurrentTask(runnable.runTaskTimerAsynchronously(ExpressoBukkit.getInstance(), 0, 20));
     }
 
     /***
      * Stopper la phase en cours
      */
     public void cancelPhase() {
-        Log.get().info("Phase cancel : " + this.game.getBuildBattleGameType().getCurrentPhase().getName());
+        Log.get().info("Phase cancel : " + ExpressoBukkit.getBuildBattle().getType().getCurrentPhase().getName());
         if (!this.getCurrentTask().isCancelled()) {
             System.out.println("Cancel phase task " + getCurrentTask().getTaskId());
             getCurrentTask().cancel();
@@ -162,12 +142,13 @@ public class BuildBattleManager implements Cloneable {
      */
     @SneakyThrows
     public void pausePhase() {
-        Log.get().info("Phase pause : " + this.game.getBuildBattleGameType().getCurrentPhase().getName());
+        Log.get().info("Phase pause : " + ExpressoBukkit.getBuildBattle().getType().getCurrentPhase().getName());
         Log.get().info("Pause BBGame");
-        game.setPaused(true);
-        if (game.isPaused()) {
+        ExpressoBukkit.getBuildBattle().setPaused(true);
+        if (ExpressoBukkit.getBuildBattle().isPaused()) {
             Log.get().info("Clone BBGame");
-            game.setBbGameManagerClone(this.clone());
+            // TODO Check if clone is nessesary
+            //ExpressoBukkit.getBuildBattle().setBbGameManagerClone(this.clone());
         }
     }
 
@@ -176,19 +157,20 @@ public class BuildBattleManager implements Cloneable {
      */
     @SneakyThrows
     public void nextPhase() {
+        val buildbattle = ExpressoBukkit.getBuildBattle();
         // Get & Poll la prochaine phase
-        this.game.getBuildBattleGameType().setCurrentPhase(this.game.getInstancePhases().poll());
-        Log.get().info("Phase en cours : " + this.game.getBuildBattleGameType().getCurrentPhase().getName());
+        buildbattle.getType().setCurrentPhase(buildbattle.getInstancePhases().poll());
+        Log.get().info("Phase en cours : " + buildbattle.getType().getCurrentPhase().getName());
         // Définir le status de la prochaine phase
-        this.getGame().setGameState(this.game.getBuildBattleGameType().getCurrentPhase().getState());
+        buildbattle.setState(buildbattle.getType().getCurrentPhase().getState());
         // Lancer la Task de la prochaine phase
-        this.startPhase(this.game.getBuildBattleGameType().getCurrentPhase().runnable());
+        this.startPhase(buildbattle.getType().getCurrentPhase().runnable());
         // Lancer le moteur de la partie s'il en existe un pour la phase en cours
-        if (this.game.getBuildBattleGameType().getCurrentPhase().getEngine() != null) {
+        if (buildbattle.getType().getCurrentPhase().getEngine() != null) {
             // Lancer le moteur de la partie
-            this.game.getBuildBattleGameType().getCurrentPhase().getEngine().load();
+            buildbattle.getType().getCurrentPhase().getEngine().load();
             // Enregister les évenements propre au moteur de la partie
-            this.game.getBuildBattleGameType().getCurrentPhase().getEngine().registerListener();
+            buildbattle.getType().getCurrentPhase().getEngine().registerListener();
         }
     }
 
@@ -205,19 +187,6 @@ public class BuildBattleManager implements Cloneable {
                 pm.disablePlugin(pm.getPlugin(s));
             }
         });
-    }
-
-    // STATE
-
-    /***
-     * État d'une partie en cours
-     */
-    public enum GameState {
-        NONE,
-        WAITING,
-        LAUNCHING,
-        IN_GAME,
-        ENDING
     }
 }
 

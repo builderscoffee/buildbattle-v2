@@ -13,12 +13,12 @@ public class CompetitorListener implements Listener {
     @EventHandler
     public void onCompetitorJoin(CompetitorJoinEvent event) {
         final Player player = event.getCompetitor();
-        ExpressoBukkit.getBbGame().getCompetitors().forEach(competitor -> competitor.sendMessage(MessageUtils.getMessageConfig(competitor).getGame().getCompetitorJoin().replace("%player%", player.getName()).replace("&", "§")));
+        ExpressoBukkit.getBuildBattle().getCompetitors().forEach(competitor -> competitor.sendMessage(MessageUtils.getMessageConfig(competitor).getGame().getCompetitorJoin().replace("%player%", player.getName()).replace("&", "§")));
     }
 
     @EventHandler
     public void onCompetitorLeave(CompetitorLeaveEvent event) {
         final Player player = event.getCompetitor();
-        ExpressoBukkit.getBbGame().getCompetitors().forEach(competitor -> competitor.sendMessage(MessageUtils.getMessageConfig(competitor).getGame().getCompetitorLeave().replace("%player%", player.getName()).replace("&", "§")));
+        ExpressoBukkit.getBuildBattle().getCompetitors().forEach(competitor -> competitor.sendMessage(MessageUtils.getMessageConfig(competitor).getGame().getCompetitorLeave().replace("%player%", player.getName()).replace("&", "§")));
     }
 }

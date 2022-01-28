@@ -2,7 +2,7 @@ package eu.builderscoffee.expresso.buildbattle.phase.bases;
 
 import eu.builderscoffee.api.bukkit.utils.ItemBuilder;
 import eu.builderscoffee.expresso.ExpressoBukkit;
-import eu.builderscoffee.expresso.buildbattle.BuildBattleManager;
+import eu.builderscoffee.expresso.buildbattle.GameState;
 import eu.builderscoffee.expresso.buildbattle.phase.BBPhase;
 import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -17,7 +17,7 @@ public class EndPhase extends BBPhase {
         this.descriptions = Arrays.asList("Mettre fin à la partie");
         this.icons = new ItemBuilder(Material.NETHER_WART).setName(name).build();
         this.unit = TimeUnit.MINUTES;
-        this.state = BuildBattleManager.GameState.ENDING;
+        this.state = GameState.ENDING;
         this.engine = null;
         this.time = defaultTime;
     }
@@ -28,7 +28,7 @@ public class EndPhase extends BBPhase {
             @Override
             public void run() {
                 // Finir la partie
-                ExpressoBukkit.getBbGame().getBbGameManager().endGame();
+                ExpressoBukkit.getBuildBattle().getGameManager().endGame();
                 //TODO Autre chose à faire avant de fermer le serveur ?
             }
         };

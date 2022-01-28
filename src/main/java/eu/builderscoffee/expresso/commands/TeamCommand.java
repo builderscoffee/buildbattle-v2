@@ -18,7 +18,7 @@ public class TeamCommand implements CommandExecutor {
 
     // Instances of
     @Getter
-    private final BuildBattle bbGame = ExpressoBukkit.getBbGame();
+    private final BuildBattle bbGame = ExpressoBukkit.getBuildBattle();
 
     public static boolean argLength0(Player player) {
         List<String> commandList = new ArrayList<>();
@@ -45,14 +45,14 @@ public class TeamCommand implements CommandExecutor {
                 break;
             case "leave":
                 // Quitter le groupe d'un joueur
-                ExpressoBukkit.getBbGame().getTeamManager().removePlayerFromTeam(player);
+                ExpressoBukkit.getBuildBattle().getTeamManager().removePlayerFromTeam(player);
                 break;
             case "disband":
                 // Supprimer votre groupe si vous êtes leader
-                ExpressoBukkit.getBbGame().getTeamManager().unregisterTeam(player);
+                ExpressoBukkit.getBuildBattle().getTeamManager().unregisterTeam(player);
                 break;
             case "info":
-                ExpressoBukkit.getBbGame().getTeamManager().viewTeam(player);
+                ExpressoBukkit.getBuildBattle().getTeamManager().viewTeam(player);
                 break;
             default:
                 return false;
@@ -66,14 +66,14 @@ public class TeamCommand implements CommandExecutor {
         switch (args1) {
             case "add":
                 // Ajouter un joueur au groupe
-                ExpressoBukkit.getBbGame().getTeamManager().SendInvitation(player, targetLenght2.getPlayer());
+                ExpressoBukkit.getBuildBattle().getTeamManager().SendInvitation(player, targetLenght2.getPlayer());
                 break;
             case "remove":
                 // Retirer un joueur au groupe
-                ExpressoBukkit.getBbGame().getTeamManager().removePlayerFromTeam(targetLenght2.getPlayer());
+                ExpressoBukkit.getBuildBattle().getTeamManager().removePlayerFromTeam(targetLenght2.getPlayer());
                 break;
             case "info":
-                ExpressoBukkit.getBbGame().getTeamManager().viewTargetTeam(player, Bukkit.getPlayer(args1));
+                ExpressoBukkit.getBuildBattle().getTeamManager().viewTargetTeam(player, Bukkit.getPlayer(args1));
                 break;
             default:
                 return false;
@@ -89,11 +89,11 @@ public class TeamCommand implements CommandExecutor {
                 switch (args3) {
                     case "accept":
                         // Accepter l'invite du joueur
-                        ExpressoBukkit.getBbGame().getTeamManager().AcceptInvitation(player, Bukkit.getPlayerExact(args2));
+                        ExpressoBukkit.getBuildBattle().getTeamManager().AcceptInvitation(player, Bukkit.getPlayerExact(args2));
                         break;
                     case "deny":
                         // Refuser l'invite du joueur
-                        ExpressoBukkit.getBbGame().getTeamManager().DenyInvitation(player, Bukkit.getPlayerExact(args2));
+                        ExpressoBukkit.getBuildBattle().getTeamManager().DenyInvitation(player, Bukkit.getPlayerExact(args2));
                         break;
                 }
                 break;

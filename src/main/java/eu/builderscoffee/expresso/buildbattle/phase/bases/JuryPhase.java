@@ -4,6 +4,7 @@ package eu.builderscoffee.expresso.buildbattle.phase.bases;
 import eu.builderscoffee.api.bukkit.utils.ItemBuilder;
 import eu.builderscoffee.expresso.ExpressoBukkit;
 import eu.builderscoffee.expresso.buildbattle.BuildBattleManager;
+import eu.builderscoffee.expresso.buildbattle.GameState;
 import eu.builderscoffee.expresso.buildbattle.phase.BBPhase;
 import eu.builderscoffee.expresso.buildbattle.toolbars.ToolbarManager;
 import org.bukkit.Bukkit;
@@ -20,7 +21,7 @@ public class JuryPhase extends BBPhase {
         this.descriptions = Arrays.asList("Notation des plots");
         this.icons = new ItemBuilder(Material.COD).setName(name).build();
         this.unit = TimeUnit.MINUTES;
-        this.state = BuildBattleManager.GameState.ENDING;
+        this.state = GameState.ENDING;
         this.engine = null;
         this.defaultTime = defaultTime;
         this.time = defaultTime;
@@ -48,7 +49,7 @@ public class JuryPhase extends BBPhase {
                 Bukkit.getServer().setWhitelist(true);
 
                 // Ajouter la toolbar au jury
-                ExpressoBukkit.getBbGame().getJurors().forEach(jury -> ExpressoBukkit.getBbGame().getToolbarManager().addToolBar(jury, ToolbarManager.Toolbars.JURORS));
+                ExpressoBukkit.getBuildBattle().getJurors().forEach(jury -> ExpressoBukkit.getBuildBattle().getToolbarManager().addToolBar(jury, ToolbarManager.Toolbars.JURORS));
             }
         };
     }

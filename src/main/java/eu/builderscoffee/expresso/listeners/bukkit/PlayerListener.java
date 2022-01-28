@@ -3,6 +3,7 @@ package eu.builderscoffee.expresso.listeners.bukkit;
 import eu.builderscoffee.api.bukkit.utils.LocationsUtil;
 import eu.builderscoffee.expresso.ExpressoBukkit;
 import eu.builderscoffee.expresso.buildbattle.BuildBattleManager;
+import eu.builderscoffee.expresso.buildbattle.GameState;
 import eu.builderscoffee.expresso.buildbattle.toolbars.ToolbarManager;
 import eu.builderscoffee.expresso.configuration.SettingsConfiguration;
 import eu.builderscoffee.expresso.utils.MessageUtils;
@@ -33,8 +34,8 @@ public class PlayerListener implements Listener {
         val messages = MessageUtils.getMessageConfig(player);
 
         // Scoreboard Updater
-        if (Objects.nonNull(ExpressoBukkit.getBbGame())) {
-            ExpressoBukkit.getBbGame().getBbGameTypes().getBaseBoard().update(player);
+        if (Objects.nonNull(ExpressoBukkit.getBuildBattle().getType())) {
+            ExpressoBukkit.getBuildBattle().getType().getCategory().getBaseBoard().update(player);
         }
         // Player Inventory
         player.setGameMode(GameMode.ADVENTURE);
@@ -53,11 +54,11 @@ public class PlayerListener implements Listener {
             player.teleport(Bukkit.getWorld("world").getSpawnLocation());
         }
 
-        if (Objects.nonNull(ExpressoBukkit.getBbGame())) {
-            if (ExpressoBukkit.getBbGame().getGameState().equals(BuildBattleManager.GameState.IN_GAME)) {
+        if (Objects.nonNull(ExpressoBukkit.getBuildBattle())) {
+            if (ExpressoBukkit.getBuildBattle().getState().equals(GameState.IN_GAME)) {
                 player.setGameMode(GameMode.CREATIVE);
                 player.sendMessage(messages.getGame().getPlotAuto().replace("%prefix%", MessageUtils.getDefaultMessageConfig().getPrefix()));
-                ExpressoBukkit.getBbGame().getToolbarManager().addToolBar(player, ToolbarManager.Toolbars.SPECTATOR);
+                ExpressoBukkit.getBuildBattle().getToolbarManager().addToolBar(player, ToolbarManager.Toolbars.SPECTATOR);
             }
         }
     }
@@ -65,17 +66,17 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onDisconnect(PlayerQuitEvent event) {
         // Scoreboard clean
-        ExpressoBukkit.getBbGame().getBbGameTypes().getBaseBoard().remove(event.getPlayer());
+        ExpressoBukkit.getBuildBattle().getType().getCategory().getBaseBoard().remove(event.getPlayer());
 
         // Clean toolbars
-        ExpressoBukkit.getBbGame().getToolbarManager().removeToolBar(event.getPlayer());
+        ExpressoBukkit.getBuildBattle().getToolbarManager().removeToolBar(event.getPlayer());
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onCommand(PlayerCommandPreprocessEvent event) {
         if (event.getMessage().toLowerCase().contains("/plot auto") || event.getMessage().toLowerCase().contains("/plot claim")) {
-            if (ExpressoBukkit.getBbGame().getGameState().equals(BuildBattleManager.GameState.IN_GAME)) {
-                ExpressoBukkit.getBbGame().addCompetitor(event.getPlayer());
+            if (ExpressoBukkit.getBuildBattle().getState().equals(GameState.IN_GAME)) {
+                ExpressoBukkit.getBuildBattle().getCompetitors().add(event.getPlayer());
             } else {
                 event.setCancelled(true);
                 event.getPlayer().sendMessage(MessageUtils.getMessageConfig(event.getPlayer()).getGame().getPlotAutoSpam());
@@ -86,14 +87,14 @@ public class PlayerListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent event) {
-        if (!ExpressoBukkit.getBbGame().getGameState().equals(BuildBattleManager.GameState.IN_GAME)) {
+        if (!ExpressoBukkit.getBuildBattle().getState().equals(GameState.IN_GAME)) {
             event.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent event) {
-        if (!ExpressoBukkit.getBbGame().getGameState().equals(BuildBattleManager.GameState.IN_GAME)) {
+        if (!ExpressoBukkit.getBuildBattle().getState().equals(GameState.IN_GAME)) {
             event.setCancelled(true);
         }
     }

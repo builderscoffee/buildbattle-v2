@@ -30,7 +30,7 @@ public class TeamListeners implements Listener {
         // Envoyer un message quand le joueur rejoins
         members.forEach(member -> member.sendMessage(MessageUtils.getMessageConfig(member).getTeam().getPlayerJoin().replace("%target%", event.getPlayer().getName())));
         // Ajouter le joueur au plot du leader du groupe
-        ExpressoBukkit.getBbGame().getTeamManager().addMemberToAllPlot(event.getPlayer());
+        ExpressoBukkit.getBuildBattle().getTeamManager().addMemberToAllPlot(event.getPlayer());
     }
 
 
@@ -40,7 +40,7 @@ public class TeamListeners implements Listener {
         //Envoyer un message quand le joueur quitte
         members.forEach(member -> member.sendMessage(MessageUtils.getMessageConfig(member).getTeam().getPlayerQuit()));
         // Retirer le joueur au plot du leader du groupe
-        ExpressoBukkit.getBbGame().getTeamManager().removeMemberFromAllPlot(event.getPlayer());
+        ExpressoBukkit.getBuildBattle().getTeamManager().removeMemberFromAllPlot(event.getPlayer());
     }
 
 }

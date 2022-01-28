@@ -24,8 +24,8 @@ public class JoinItem extends ToolbarItem {
     @Override
     public void interact(Player player, Action action) {
         // Ajouter le joueur à la liste des participants
-        if (!ExpressoBukkit.getBbGame().getCompetitors().contains(player)) {
-            ExpressoBukkit.getBbGame().addCompetitor(player);
+        if (!ExpressoBukkit.getBuildBattle().getCompetitors().contains(player)) {
+            ExpressoBukkit.getBuildBattle().getCompetitors().add(player);
             // Faire executer la commande aux joueurs pour l'ajouter dans un plot
             Bukkit.getServer().getPlayer(player.getName()).performCommand("/plot auto");
         }

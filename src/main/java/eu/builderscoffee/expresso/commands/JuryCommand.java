@@ -14,7 +14,7 @@ public class JuryCommand implements CommandExecutor {
     SettingsConfiguration settings = ExpressoBukkit.getSettings();
 
     public static boolean argLength0(Player player) {
-        ExpressoBukkit.getBbGame().getToolbarManager().addToolBar(player, ToolbarManager.Toolbars.JURORS);
+        ExpressoBukkit.getBuildBattle().getToolbarManager().addToolBar(player, ToolbarManager.Toolbars.JURORS);
         return true;
     }
 

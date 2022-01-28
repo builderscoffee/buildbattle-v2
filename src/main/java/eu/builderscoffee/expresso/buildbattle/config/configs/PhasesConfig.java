@@ -23,10 +23,10 @@ public class PhasesConfig extends ConfigTemplate {
     @Override
     public ServerManagerResponse request(ServerManagerRequest request, ServerManagerResponse response) {
         System.out.println(">> Request " + this.getClass().getSimpleName());
-        val gameType = ExpressoBukkit.getBbGame().getBuildBattleGameType();
+        val gameType = ExpressoBukkit.getBuildBattle().getType();
 
         if (request.getData().equals("setplaytime")) {
-            ExpressoBukkit.getBbGame().setInstancePhases(ExpressoBukkit.getBbGame().getBuildBattleGameType().getPhases());
+            ExpressoBukkit.getBuildBattle().setInstancePhases(ExpressoBukkit.getBuildBattle().getType().getPhases());
             return redirect(SingleThemeConfig.class, response);
         }
 
@@ -61,7 +61,7 @@ public class PhasesConfig extends ConfigTemplate {
         val itemsAction = new ServerManagerResponse.Items();
         itemsAction.setType(type);
 
-        val gameType = ExpressoBukkit.getBbGame().getBuildBattleGameType();
+        val gameType = ExpressoBukkit.getBuildBattle().getType();
 
         AtomicInteger i = new AtomicInteger(0);
         gameType.getPhases().stream()
@@ -74,7 +74,7 @@ public class PhasesConfig extends ConfigTemplate {
         response.getActions().add(itemsAction);
 
         // Add return item
-        addPreviousConfigItem(response, GameTypesConfig.class);
+        addPreviousConfigItem(response, BuildBattleTypesConfig.class);
         return response;
     }
 }

@@ -1,7 +1,7 @@
 package eu.builderscoffee.expresso.buildbattle.games.expressos.types;
 
 import eu.builderscoffee.api.bukkit.utils.ItemBuilder;
-import eu.builderscoffee.expresso.buildbattle.games.expressos.ExpressoGameType;
+import eu.builderscoffee.expresso.buildbattle.games.expressos.ExpressoType;
 import eu.builderscoffee.expresso.buildbattle.phase.bases.EndPhase;
 import eu.builderscoffee.expresso.buildbattle.phase.bases.GamePhase;
 import eu.builderscoffee.expresso.buildbattle.phase.bases.LaunchingPhase;
@@ -13,13 +13,13 @@ import java.util.List;
 
 import static eu.builderscoffee.expresso.utils.TimeUtils.HOUR;
 
-public class IlClassicoExpressoGameType extends ExpressoGameType {
+public class IlClassicoExpressoType extends ExpressoType {
 
-    public IlClassicoExpressoGameType() {
+    public IlClassicoExpressoType() {
         super("IlClassico");
-        this.phases.add(new LaunchingPhase(30));
-        this.phases.add(new GamePhase(2 * HOUR));
-        this.phases.add(new EndPhase());
+        phases.add(new LaunchingPhase(30));
+        phases.add(new GamePhase(2 * HOUR));
+        phases.add(new EndPhase());
     }
 
     @Override

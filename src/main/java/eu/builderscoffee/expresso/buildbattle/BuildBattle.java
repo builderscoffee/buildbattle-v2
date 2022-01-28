@@ -1,10 +1,6 @@
 package eu.builderscoffee.expresso.buildbattle;
 
 import eu.builderscoffee.expresso.ExpressoBukkit;
-import eu.builderscoffee.expresso.buildbattle.games.classic.ClassicGameType;
-import eu.builderscoffee.expresso.buildbattle.games.expressos.ExpressoGameType;
-import eu.builderscoffee.expresso.buildbattle.games.expressos.ExpressoManager;
-import eu.builderscoffee.expresso.buildbattle.games.tournament.TournamentGameType;
 import eu.builderscoffee.expresso.buildbattle.notation.NotationManager;
 import eu.builderscoffee.expresso.buildbattle.phase.BBPhase;
 import eu.builderscoffee.expresso.buildbattle.teams.TeamManager;
@@ -13,9 +9,12 @@ import eu.builderscoffee.expresso.events.competitor.CompetitorJoinEvent;
 import eu.builderscoffee.expresso.events.competitor.CompetitorLeaveEvent;
 import lombok.Data;
 import lombok.experimental.Accessors;
-import org.bukkit.Bukkit;
+import lombok.val;
 import org.bukkit.entity.Player;
+import org.reflections.Reflections;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
@@ -24,117 +23,41 @@ import java.util.List;
 @Accessors(chain = true)
 public class BuildBattle {
 
-    public TeamManager teamManager;
-    // Etat de la partie
-    public BuildBattleManager.GameState gameState = BuildBattleManager.GameState.WAITING;
-    // Liste des compétiteurs
-    private List<Player> competitors = new ArrayList<>();
-    // Liste des jurys
-    private List<Player> jurors = new ArrayList<>();
-    // Type d'instance ( Expresso , BB , tournois )
-    private BuildBattleInstanceType bbGameTypes;
-    private BuildBattleGameType buildBattleGameType;
-    private ExpressoGameType expressoGameType = null;
-    private ClassicGameType classicGameType = null;
-    private TournamentGameType tournamentGameType = null;
-    // Manager
-    private BuildBattleManager bbGameManager;
-    private Object bbGameManagerClone;
-    private ExpressoManager expressoManager;
-    private NotationManager notationManager;
-    private ToolbarManager toolbarManager;
-    // Phase de la partie
+    // Managers
+    private final TeamManager teamManager = new TeamManager();
+    private BuildBattleManager gameManager = new BuildBattleManager();
+    private NotationManager notationManager = new NotationManager();
+    private ToolbarManager toolbarManager = new ToolbarManager();
+
+    // Player lists
+    private final ActionArrayList<Player> competitors = new ActionArrayList<>();
+    private final List<Player> jurors = new ArrayList<>();
+
+    // BuildBattle
+    private GameState state = GameState.WAITING;
+    private BuildBattleType type;
+    private List<BuildBattleType> types = new ArrayList<>();
     private Deque<BBPhase> instancePhases;
-    // Instance Check
     private boolean isReady = false;
     private boolean isPaused = false;
 
+    public BuildBattle() {
+        // Add listeners to the competitors list
+        competitors.setOnAdd(player -> ExpressoBukkit.getInstance().getServer().getPluginManager().callEvent(new CompetitorJoinEvent(player)));
+        competitors.setOnRemove(player -> ExpressoBukkit.getInstance().getServer().getPluginManager().callEvent(new CompetitorLeaveEvent(player)));
 
-    /***
-     * Créer une instance d'une BBGame
-     */
-
-    public BuildBattle(BuildBattleInstanceType type) {
-        this.bbGameTypes = type;
-        // Définir l'instance du BuildBattleManager
-        setBbGameManager(new BuildBattleManager(this));
-        // Setup les managers
-        teamManager = new TeamManager();
-        notationManager = new NotationManager();
-        toolbarManager = new ToolbarManager();
-        // Setup game managers
-        expressoManager = new ExpressoManager(this);
+        // Get all BuildBattleTypes
+        val reflections = new Reflections(BuildBattleType.class.getPackage().getName());
+        reflections.getSubTypesOf(BuildBattleType.class).stream()
+                .filter(clazz -> !Modifier.isAbstract(clazz.getModifiers()))
+                .forEach(clazz -> {
+                    try {
+                        val buildBattleType = clazz.getConstructor().newInstance();
+                        if(!buildBattleType.getCategory().equals(BuildBattleCategory.NONE))
+                            types.add(buildBattleType);
+                    } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                        e.printStackTrace();
+                    }
+                });
     }
-
-    // CONFIGURE GAME TYPE
-
-    /***
-     * Définir ou redéfinir l'expresso de la partie en cours
-     * @param type - Type de BuildBattleInstanceType
-     */
-    public final void configureGameType(BuildBattleInstanceType type) {
-        switch (type) {
-            case NONE:
-            case CLASSIC:
-                setBuildBattleGameType(classicGameType);
-                break;
-            case EXPRESSO:
-                setBuildBattleGameType(expressoGameType);
-                break;
-            case TOURNAMENT:
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value: " + type);
-        }
-    }
-
-
-    // COMPETITOR
-
-    /**
-     * Ajouter un joueur à la liste des participants
-     * @param player - Joueur
-     */
-    public void addCompetitor(Player player) {
-        competitors.add(player);
-        ExpressoBukkit.getInstance().getServer().getPluginManager().callEvent(new CompetitorJoinEvent(player));
-    }
-
-    /**
-     * Retirer un joueur de la liste des participants
-     * @param player - Joueur
-     */
-    public void removeCompetitor(Player player) {
-        competitors.remove(player);
-        ExpressoBukkit.getInstance().getServer().getPluginManager().callEvent(new CompetitorLeaveEvent(player));
-    }
-
-    // JURY
-
-    /**
-     * Ajouter un joueur à la liste des jury
-     * @param player - Joueur
-     */
-    public void addJury(Player player) {
-        jurors.add(player);
-    }
-
-    /**
-     * Retirer un joueur de la liste des jury
-     * @param player - Joueur
-     */
-    public void removeJury(Player player) {
-        jurors.remove(player);
-    }
-
-    // OTHER STUFF
-
-    /***
-     * Broadcast un message dans la partie
-     * @param message - Message à broadcast
-     */
-    public void broadcast(final String message) {
-        Bukkit.broadcastMessage(message);
-    }
-
 }

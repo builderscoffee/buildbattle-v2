@@ -2,10 +2,9 @@ package eu.builderscoffee.expresso.buildbattle.phase.bases;
 
 
 import eu.builderscoffee.api.bukkit.utils.ItemBuilder;
-import eu.builderscoffee.api.bukkit.utils.Title;
 import eu.builderscoffee.expresso.ExpressoBukkit;
 import eu.builderscoffee.expresso.buildbattle.BuildBattle;
-import eu.builderscoffee.expresso.buildbattle.BuildBattleManager;
+import eu.builderscoffee.expresso.buildbattle.GameState;
 import eu.builderscoffee.expresso.buildbattle.phase.BBPhase;
 import eu.builderscoffee.expresso.utils.Log;
 import eu.builderscoffee.expresso.utils.MessageUtils;
@@ -38,7 +37,7 @@ public class GamePhase extends BBPhase {
         this.descriptions = Arrays.asList("Représente une partie en cours");
         this.icons = new ItemBuilder(Material.CLOCK).setName(name).build();
         this.unit = TimeUnit.MINUTES;
-        this.state = BuildBattleManager.GameState.IN_GAME;
+        this.state = GameState.IN_GAME;
         this.engine = null;
         this.defaultTime = defaultTime;
         this.time = defaultTime;
@@ -83,7 +82,7 @@ public class GamePhase extends BBPhase {
                 }));
 
                 // Passer à l'étape suivante si le temps est écoulé
-                if (currentTime >= time) ExpressoBukkit.getBbGame().getBbGameManager().nextPhase();
+                if (currentTime >= time) ExpressoBukkit.getBuildBattle().getGameManager().nextPhase();
 
                 ++currentTime;
             }

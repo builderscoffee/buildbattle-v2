@@ -10,7 +10,6 @@ import eu.builderscoffee.expresso.buildbattle.config.ConfigRequestable;
 import eu.builderscoffee.expresso.buildbattle.config.ConfigResponsible;
 import eu.builderscoffee.expresso.utils.ReflectionUtils;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;

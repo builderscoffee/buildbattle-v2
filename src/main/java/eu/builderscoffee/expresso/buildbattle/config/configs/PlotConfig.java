@@ -17,7 +17,7 @@ public class PlotConfig extends ConfigTemplate {
 
     @Getter
     @Setter
-    private int plotSize = 0;
+    private int plotSize = 40;
 
     public PlotConfig() {
         super("plot");

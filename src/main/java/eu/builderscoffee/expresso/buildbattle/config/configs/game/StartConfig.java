@@ -15,13 +15,13 @@ public class StartConfig implements ConfigResponsible {
         val itemsAction = new ServerManagerResponse.Items();
 
         itemsAction.setType("game");
-        if (!ExpressoBukkit.getBbGame().getBbGameManager().isRunning() || ExpressoBukkit.getBbGame().isPaused()) {
+        if (!ExpressoBukkit.getBuildBattle().getGameManager().isRunning() || ExpressoBukkit.getBuildBattle().isPaused()) {
             itemsAction.addItem(2, 4, new ItemBuilder(Material.GREEN_WOOL).setName("§aDémarer").build(), "start");
 
             // Add Action to response
             response.getActions().add(itemsAction);
 
-            switch (ExpressoBukkit.getBbGame().getBbGameTypes()) {
+            switch (ExpressoBukkit.getBuildBattle().getType().getCategory()) {
                 case EXPRESSO:
                     // Add return item
                     addPreviousConfigItem(response, PhasesConfig.class);

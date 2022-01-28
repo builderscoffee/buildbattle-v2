@@ -2,6 +2,7 @@ package eu.builderscoffee.expresso.buildbattle.phase;
 
 import eu.builderscoffee.expresso.buildbattle.BuildBattleEngine;
 import eu.builderscoffee.expresso.buildbattle.BuildBattleManager;
+import eu.builderscoffee.expresso.buildbattle.GameState;
 import lombok.Data;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -22,7 +23,7 @@ public abstract class BBPhase {
     protected List<String> descriptions;
     protected ItemStack icons;
     protected TimeUnit unit;
-    protected BuildBattleManager.GameState state;
+    protected GameState state;
     protected BuildBattleEngine engine;
     protected BukkitRunnable runnable; // Bukkit runnable de la phase
 
@@ -67,7 +68,7 @@ public abstract class BBPhase {
      *
      * @return
      */
-    public final BuildBattleManager.GameState getState() {
+    public final GameState getState() {
         return state;
     }
 

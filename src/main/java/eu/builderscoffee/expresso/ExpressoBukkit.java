@@ -47,13 +47,14 @@ public class ExpressoBukkit extends JavaPlugin {
     private static ExpressoBukkit instance;
     @Getter
     @Setter
-    private static BuildBattle bbGame;
+    private static BuildBattle buildBattle;
     @Getter
     private static ExecutionManager executionManager;
 
     @Override
     public void onEnable() {
         instance = this;
+        buildBattle = new BuildBattle();
 
         // Read or create configurations
         messages = readOrCreateConfiguration(this.getName(), MessageConfiguration.class, Profil.Languages.class);
