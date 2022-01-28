@@ -44,7 +44,6 @@ jobs:
                 "username": "${{ secrets.GIT_USER }}",
                 "password": "${{ secrets.GIT_TOKEN }}"
             }]
-
       # Check branch name and put name in env variable
       - name: Some check on branch
         id: branch_check
@@ -57,20 +56,19 @@ jobs:
           else
           echo "::set-output name=env_name::Features"
           fi
-
       # Build maven
       - name: Build with Maven
         run: mvn package
 
       # Publish jar to infrastructure
-      - name: Publish
-        uses: fjogeleit/http-request-action@master
-        with:
-          url: 'http://54.36.124.50:3000/'
-          data: '{"type": "buildbattle" ,"version": "${{ steps.branch_check.outputs.env_name }}" }'
-          files: '{ "file": "${{ github.workspace }}/target/BuildBattle.jar" }'
-          username: ${{ secrets.INFRA_USER }}
-          password: ${{ secrets.INFRA_PASSWORD }}
+      #- name: Publish
+      #  uses: fjogeleit/http-request-action@master
+      #  with:
+      #    url: 'http://54.36.124.50:3000/'
+      #    data: '{"type": "buildbattle" ,"version": "${{ steps.branch_check.outputs.env_name }}" }'
+      #    files: '{ "file": "${{ github.workspace }}/target/BuildBattle.jar" }'
+      #    username: ${{ secrets.INFRA_USER }}
+      #    password: ${{ secrets.INFRA_PASSWORD }}
 
     outputs:
       env_name: ${{ steps.branch_check.outputs.env_name }} # Save branche name
