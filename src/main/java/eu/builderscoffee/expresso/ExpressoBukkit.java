@@ -9,6 +9,7 @@ import eu.builderscoffee.api.common.events.EventHandler;
 import eu.builderscoffee.api.common.redisson.Redis;
 import eu.builderscoffee.commons.common.redisson.topics.CommonTopics;
 import eu.builderscoffee.expresso.buildbattle.BuildBattle;
+import eu.builderscoffee.expresso.buildbattle.config.configs.PlotConfig;
 import eu.builderscoffee.expresso.buildbattle.tasks.BoardTask;
 import eu.builderscoffee.expresso.commands.JuryCommand;
 import eu.builderscoffee.expresso.commands.PlotCommand;
@@ -22,8 +23,10 @@ import eu.builderscoffee.expresso.listeners.bukkit.PlotListener;
 import eu.builderscoffee.expresso.listeners.bukkit.TeamListeners;
 import eu.builderscoffee.expresso.listeners.redisson.ConfigListener;
 import eu.builderscoffee.expresso.listeners.redisson.HeartBeatListener;
+import eu.builderscoffee.expresso.utils.WorldBuilder;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Map;

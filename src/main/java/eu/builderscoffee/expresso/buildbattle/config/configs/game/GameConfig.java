@@ -12,7 +12,6 @@ import eu.builderscoffee.expresso.utils.WorldBuilder;
 import lombok.val;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;
 
@@ -54,21 +53,22 @@ public class GameConfig extends ConfigTemplate {
                             .setWallHeight(64)
                             .generate(ExpressoBukkit.getSettings().getPlotWorldName());
                      */
-                    new WorldBuilder.DefaultWorldBuilder()
-                            .setHasBedrock(true)
-                            .setRoadWidth(7)
-                            .setPlotBlock(Material.DIRT)
-                            .setPlotHeight(64)
-                            .setRoadHeight(64)
-                            .setRoadBlock(Material.QUARTZ_BLOCK)
-                            .setWallFillingBlock(Material.STONE)
-                            .setBlockOnTopOfPlotBlock(true)
-                            .setPlotFloorBlock(Material.GRASS_BLOCK)
-                            .setPlotWidth(getRequestable(PlotConfig.class).getPlotSize())
-                            .setTopWallBlockClaimed(Material.ACACIA_SLAB)
-                            .setTopWallBlockUnClaimed(Material.BIRCH_SLAB)
-                            .setWallHeight(64)
-                            .setup(ExpressoBukkit.getSettings().getPlotWorldName());
+                    Bukkit.getScheduler().runTask(ExpressoBukkit.getInstance(), () ->
+                            new WorldBuilder.DefaultWorldBuilder()
+                                    .setHasBedrock(true)
+                                    .setRoadWidth(7)
+                                    .setPlotBlock(Material.DIRT)
+                                    .setPlotHeight(64)
+                                    .setRoadHeight(64)
+                                    .setRoadBlock(Material.QUARTZ_BLOCK)
+                                    .setWallFillingBlock(Material.STONE)
+                                    .setBlockOnTopOfPlotBlock(true)
+                                    .setPlotFloorBlock(Material.GRASS_BLOCK)
+                                    .setPlotWidth(getRequestable(PlotConfig.class).getPlotSize())
+                                    .setTopWallBlockClaimed(Material.ACACIA_SLAB)
+                                    .setTopWallBlockUnClaimed(Material.BIRCH_SLAB)
+                                    .setWallHeight(64)
+                                    .setup(ExpressoBukkit.getSettings().getPlotWorldName()));
                 }
                 // Lancer la partie
                 ExpressoBukkit.getBbGame().setReady(true);
