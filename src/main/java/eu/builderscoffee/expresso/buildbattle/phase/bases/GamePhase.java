@@ -2,6 +2,7 @@ package eu.builderscoffee.expresso.buildbattle.phase.bases;
 
 
 import eu.builderscoffee.api.bukkit.utils.ItemBuilder;
+import eu.builderscoffee.api.bukkit.utils.Title;
 import eu.builderscoffee.expresso.ExpressoBukkit;
 import eu.builderscoffee.expresso.buildbattle.BuildBattle;
 import eu.builderscoffee.expresso.buildbattle.GameState;
@@ -15,6 +16,7 @@ import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
@@ -34,7 +36,7 @@ public class GamePhase extends BBPhase {
 
     public GamePhase(int defaultTime) {
         this.name = "En jeux";
-        this.descriptions = Arrays.asList("Représente une partie en cours");
+        this.descriptions = Collections.singletonList("Représente une partie en cours");
         this.icons = new ItemBuilder(Material.CLOCK).setName(name).build();
         this.unit = TimeUnit.MINUTES;
         this.state = GameState.IN_GAME;
@@ -61,7 +63,7 @@ public class GamePhase extends BBPhase {
                         @Override
                         public void run() {
                             getOnlinePlayers().forEach(p -> {
-                                //new Title(MessageUtils.getMessageConfig(p).getGame().getThemesTitle(), ExpressoBukkit.getBbGame().getBbGameManager().getTheme(), 20, 20, 20).send(p);
+                                new Title(MessageUtils.getMessageConfig(p).getGame().getThemesTitle(), ExpressoBukkit.getBuildBattle().getGameManager().getTheme(), 20, 20, 20).send(p);
                                 p.setGameMode(CREATIVE);
                             });
                         }
@@ -78,7 +80,7 @@ public class GamePhase extends BBPhase {
 
                 // Tout les X temps envoyé un title pour la dernière minute restante
                 Arrays.stream(titleTime).filter(i -> i == currentTime).forEach(i -> getOnlinePlayers().forEach(p -> {
-                    //new Title(MessageUtils.getMessageConfig(p).getGame().getRemainingTime(), TimeUtils.getDurationString(time - currentTime), 20, 5, 20).send(p);
+                    new Title(MessageUtils.getMessageConfig(p).getGame().getRemainingTime(), TimeUtils.getDurationString(time - currentTime), 20, 5, 20).send(p);
                 }));
 
                 // Passer à l'étape suivante si le temps est écoulé

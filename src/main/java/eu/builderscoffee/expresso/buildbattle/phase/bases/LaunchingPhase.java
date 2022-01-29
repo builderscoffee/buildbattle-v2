@@ -2,6 +2,7 @@ package eu.builderscoffee.expresso.buildbattle.phase.bases;
 
 
 import eu.builderscoffee.api.bukkit.utils.ItemBuilder;
+import eu.builderscoffee.api.bukkit.utils.Title;
 import eu.builderscoffee.expresso.ExpressoBukkit;
 import eu.builderscoffee.expresso.buildbattle.GameState;
 import eu.builderscoffee.expresso.buildbattle.phase.BBPhase;
@@ -41,8 +42,9 @@ public class LaunchingPhase extends BBPhase {
                 // Lancer le chrono ( Title + Level )
                 for (final Player player : Bukkit.getOnlinePlayers()) {
                     player.setLevel(time);
-                    if (time == 30 || time == 20 || time == 10 || time == 5) { }
-                        //new Title(MessageUtils.getMessageConfig(player).getGame().getStartInTitle(), MessageUtils.getMessageConfig(player).getGame().getStartInSubTitle().replace("%time%", String.valueOf(time)), 20, 10, 20).send(player);
+                    if (time == 30 || time == 20 || time == 10 || time == 5) {
+                        new Title(MessageUtils.getMessageConfig(player).getGame().getStartInTitle(), MessageUtils.getMessageConfig(player).getGame().getStartInSubTitle().replace("%time%", String.valueOf(time)), 20, 10, 20).send(player);
+                    }
                 }
                 // Décompte du temps dans le chat
                 if (time % 10 == 0 || time == 10 || time == 5 || time == 4 || time == 3 || time == 2 || time == 1) {

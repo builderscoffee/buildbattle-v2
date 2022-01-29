@@ -19,7 +19,7 @@ public enum BuildBattleCategory {
     TOURNAMENT(TournamentType.class, "Tournois", new ItemBuilder(Material.BLACK_BANNER).setName("§cTournois").addLoreLine("§7Mélange maison").build(), new ExpressoScoreboard());
 
     @Getter
-    private final Class<? extends BuildBattleType> buildbattleGameTypeClass;
+    private final Class<? extends BuildBattleType> buildbattleTypeClass;
     @Getter
     private final String buildBattleGameTypeName;
     @Getter
@@ -27,8 +27,8 @@ public enum BuildBattleCategory {
     @Getter
     private final BaseBoard baseBoard;
 
-    BuildBattleCategory(Class<? extends BuildBattleType> buildbattleGameTypeClass, @NonNull String buildBattleGameTypeName, ItemStack icon, @NonNull BaseBoard baseBoard) {
-        this.buildbattleGameTypeClass = buildbattleGameTypeClass;
+    BuildBattleCategory(Class<? extends BuildBattleType> buildbattleTypeClass, @NonNull String buildBattleGameTypeName, ItemStack icon, @NonNull BaseBoard baseBoard) {
+        this.buildbattleTypeClass = buildbattleTypeClass;
         this.buildBattleGameTypeName = buildBattleGameTypeName;
         this.icon = icon;
         this.baseBoard = baseBoard;

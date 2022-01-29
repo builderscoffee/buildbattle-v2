@@ -10,6 +10,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 
+/***
+ * Outils @JoinItem
+ * Permet de rejoindre la partie en cours
+ */
 public class JoinItem extends ToolbarItem {
 
     public JoinItem(int slot) {

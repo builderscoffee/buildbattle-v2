@@ -43,7 +43,7 @@ public class TeamManager {
     }
 
     /***
-     * Retourne si la team à atteint sont maximun de membres
+     * Retourne si la team à atteint sont maximum de membres
      * @param player - Joueur
      */
     public boolean isMembersReachLimit(@NonNull Player player) {
@@ -190,7 +190,7 @@ public class TeamManager {
      * @param player - Joueur
      * @param target - Joueur
      */
-    public void SendInvitation(@NonNull Player player, @NonNull Player target) {
+    public void sendInvitation(@NonNull Player player, @NonNull Player target) {
         val messages = MessageUtils.getMessageConfig(player);
         // Check si le sender et la target ne sont pas les mêmes joueurs
         if (!player.equals(target)) {
@@ -206,10 +206,10 @@ public class TeamManager {
 
     /***
      * Accepter l'invitation d'un joueur
-     * @param receiver - Joueur qui reçois l'invitation
+     * @param receiver - Joueur qui reçoit l'invitation
      * @param sender - Joueur qui envois l'invitation
      */
-    public void AcceptInvitation(@NonNull Player receiver, @NonNull Player sender) {
+    public void acceptInvitation(@NonNull Player receiver, @NonNull Player sender) {
         val invitation = getInvitation(sender, receiver);
 
         if(Objects.isNull(invitation))
@@ -252,19 +252,11 @@ public class TeamManager {
                 .get();
     }
 
-    /***
-     * Nettoyer la liste des invitations en cours
-     */
-    public void ClearInvitations() {
-        invitations.clear();
-    }
-
-
     // Plot part
 
     /***
      * Ajouté tous les membres du groupe aux plots du leader
-     * @param team - L'object Team
+     * @param team - Object Team
      */
     public void addAllMembersToPlot(@NonNull Team team, @NonNull Plot plot) {
         team.getMembers().forEach(member -> {
