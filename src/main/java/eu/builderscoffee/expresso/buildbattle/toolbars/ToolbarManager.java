@@ -42,7 +42,7 @@ public class ToolbarManager implements Listener {
 
     /***
      * Retirer la ToolBar du joueur
-     * @param player
+     * @param player - Le joueur
      */
     public void removeToolBar(@NonNull Player player) {
         if (playerToolbars.containsKey(player)) {
@@ -55,7 +55,7 @@ public class ToolbarManager implements Listener {
 
     /***
      * Nettoyer la hotbar
-     * @param player
+     * @param player - Le joueur
      */
     public void cleanHotBar(@NonNull Player player) {
         for (int slot = 0; slot < 8; slot++) {
@@ -72,14 +72,12 @@ public class ToolbarManager implements Listener {
         // Checker si le joueur est dans la liste
         if (!playerToolbars.containsKey(event.getPlayer())) return;
         // Check si le joueur à un item en main
-        if (Objects.nonNull(event.getPlayer().getInventory().getItemInHand())) {
-            if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
-                event.setCancelled(true);
-                // Check si l'item correspond à la liste de sa toolbar
-                val item = playerToolbars.get(event.getPlayer()).getToolbarItems().stream().filter(toolbarItem ->
-                        toolbarItem.getSlot() == event.getPlayer().getInventory().getHeldItemSlot()).findFirst().orElse(null);
-                if (Objects.nonNull(item)) item.interact(event.getPlayer(), event.getAction());
-            }
+        if ((event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR)) {
+            event.setCancelled(true);
+            // Check si l'item correspond à la liste de sa toolbar
+            val item = playerToolbars.get(event.getPlayer()).getToolbarItems().stream().filter(toolbarItem ->
+                    toolbarItem.getSlot() == event.getPlayer().getInventory().getHeldItemSlot()).findFirst().orElse(null);
+            if (Objects.nonNull(item)) item.interact(event.getPlayer(), event.getAction());
         }
     }
 

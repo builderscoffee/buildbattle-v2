@@ -7,14 +7,14 @@ import eu.builderscoffee.expresso.buildbattle.phase.BBPhase;
 import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 public class EndPhase extends BBPhase {
 
     public EndPhase() {
         this.name = "Fin de la partie";
-        this.descriptions = Arrays.asList("Mettre fin à la partie");
+        this.descriptions = Collections.singletonList("Mettre fin à la partie");
         this.icons = new ItemBuilder(Material.NETHER_WART).setName(name).build();
         this.unit = TimeUnit.MINUTES;
         this.state = GameState.ENDING;
@@ -30,6 +30,7 @@ public class EndPhase extends BBPhase {
                 // Finir la partie
                 ExpressoBukkit.getBuildBattle().getGameManager().endGame();
                 //TODO Autre chose à faire avant de fermer le serveur ?
+                // Backup final de la map et des schematic ?
             }
         };
     }

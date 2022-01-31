@@ -10,6 +10,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 
+/***
+ * Outils @PlotItem
+ * Permet de voir tous les plots de la partie en cours
+ */
 public class PlotItem extends ToolbarItem {
 
     public PlotItem(int slot) {

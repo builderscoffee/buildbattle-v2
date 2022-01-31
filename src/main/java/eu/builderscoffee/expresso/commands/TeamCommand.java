@@ -21,15 +21,7 @@ public class TeamCommand implements CommandExecutor {
     private final BuildBattle bbGame = ExpressoBukkit.getBuildBattle();
 
     public static boolean argLength0(Player player) {
-        List<String> commandList = new ArrayList<>();
-        val messages = MessageUtils.getMessageConfig(player);
-        commandList.add(messages.getCommand().getGroupDefaults());
-        commandList.add(messages.getCommand().getGroupAdd());
-        commandList.add(messages.getCommand().getGroupRemove());
-        commandList.add(messages.getCommand().getGroupLeave());
-        commandList.add(messages.getCommand().getGroupDisband());
-        commandList.add(messages.getCommand().getGroupInvite());
-        commandList.add(messages.getCommand().getGroupInfo());
+        List<String> commandList = new ArrayList<>(MessageUtils.getMessageConfig(player).getCommand().getGroupInfoList());
         for (String s : commandList) {
             player.sendMessage(s);
         }
@@ -66,7 +58,7 @@ public class TeamCommand implements CommandExecutor {
         switch (args1) {
             case "add":
                 // Ajouter un joueur au groupe
-                ExpressoBukkit.getBuildBattle().getTeamManager().SendInvitation(player, targetLenght2.getPlayer());
+                ExpressoBukkit.getBuildBattle().getTeamManager().sendInvitation(player, targetLenght2.getPlayer());
                 break;
             case "remove":
                 // Retirer un joueur au groupe
@@ -83,22 +75,19 @@ public class TeamCommand implements CommandExecutor {
 
     public boolean argLength3(Player player, String args1, String args2, String args3) {
         args1 = args1.toLowerCase();
-        switch (args1) {
-            case "invite":
-                // Gérer les invitations
-                switch (args3) {
-                    case "accept":
-                        // Accepter l'invite du joueur
-                        ExpressoBukkit.getBuildBattle().getTeamManager().AcceptInvitation(player, Bukkit.getPlayerExact(args2));
-                        break;
-                    case "deny":
-                        // Refuser l'invite du joueur
-                        ExpressoBukkit.getBuildBattle().getTeamManager().DenyInvitation(player, Bukkit.getPlayerExact(args2));
-                        break;
-                }
-                break;
-            default:
-                return false;
+        if ("invite".equals(args1)) {// Gérer les invitations
+            switch (args3) {
+                case "accept":
+                    // Accepter l'invite du joueur
+                    ExpressoBukkit.getBuildBattle().getTeamManager().acceptInvitation(player, Bukkit.getPlayerExact(args2));
+                    break;
+                case "deny":
+                    // Refuser l'invite du joueur
+                    ExpressoBukkit.getBuildBattle().getTeamManager().DenyInvitation(player, Bukkit.getPlayerExact(args2));
+                    break;
+            }
+        } else {
+            return false;
         }
         return true;
     }

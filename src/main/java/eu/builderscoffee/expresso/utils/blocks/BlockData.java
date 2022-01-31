@@ -486,7 +486,7 @@ public enum BlockData {
     }
 
     /***
-     * Retourne une BlockData par sont id et sont shortId
+     * Retourne une BlockData par son id et sont shortId
      * @param id - L'id du block
      * @param shortId - Le shortId du block
      * @return
@@ -501,7 +501,6 @@ public enum BlockData {
 
     /***
      * Retourne une liste des blocs dans une catégorie précisée
-     *
      * @param category - La catégorie du blockData
      * @return
      */

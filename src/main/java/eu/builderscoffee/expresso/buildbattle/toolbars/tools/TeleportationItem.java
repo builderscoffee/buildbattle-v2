@@ -9,6 +9,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 
+/***
+ * Outils @TeleportationItem
+ * Permet de se téléporter à un plot
+ */
 public class TeleportationItem extends ToolbarItem {
 
     public TeleportationItem(int slot) {

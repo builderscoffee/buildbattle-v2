@@ -12,13 +12,14 @@ import org.bukkit.Material;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 
 public class JuryPhase extends BBPhase {
 
     public JuryPhase(int defaultTime) {
         this.name = "Jury";
-        this.descriptions = Arrays.asList("Notation des plots");
+        this.descriptions = Collections.singletonList("Notation des plots");
         this.icons = new ItemBuilder(Material.COD).setName(name).build();
         this.unit = TimeUnit.MINUTES;
         this.state = GameState.ENDING;

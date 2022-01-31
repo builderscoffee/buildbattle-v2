@@ -15,7 +15,7 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class BuildBattleManager implements Cloneable {
+public class BuildBattleManager {
 
     // Engines
     @Getter
@@ -42,15 +42,18 @@ public class BuildBattleManager implements Cloneable {
     public void startGame() {
         // La partie est prête à démarrer
         ExpressoBukkit.getBuildBattle().setReady(true);
+        ExpressoBukkit.getExecutionManager().getTasks().put("checkstart", new CheckStartTask().runTaskTimer(ExpressoBukkit.getInstance(), 0L, 20L));
+        //TODO Pause function deprecated
+   /*
         if (!ExpressoBukkit.getBuildBattle().isPaused()) {
             // Lancer la task de check
             ExpressoBukkit.getExecutionManager().getTasks().put("checkstart", new CheckStartTask().runTaskTimer(ExpressoBukkit.getInstance(), 0L, 20L));
         } else {
             Log.get().info("Start Clone");
             ExpressoBukkit.getBuildBattle().setPaused(false);
-            // TODO Chech if clone is nessesary
             //ExpressoBukkit.getBuildBattle().setBbGameManager((BuildBattleManager) ExpressoBukkit.getBuildBattle().getBbGameManagerClone());
         }
+     */
     }
 
 
@@ -139,16 +142,16 @@ public class BuildBattleManager implements Cloneable {
 
     /***
      * Mettre en pause la partie en cours
+     * TODO Redefine pause function
      */
     @SneakyThrows
+    @Deprecated
     public void pausePhase() {
         Log.get().info("Phase pause : " + ExpressoBukkit.getBuildBattle().getType().getCurrentPhase().getName());
         Log.get().info("Pause BBGame");
         ExpressoBukkit.getBuildBattle().setPaused(true);
         if (ExpressoBukkit.getBuildBattle().isPaused()) {
             Log.get().info("Clone BBGame");
-            // TODO Check if clone is nessesary
-            //ExpressoBukkit.getBuildBattle().setBbGameManagerClone(this.clone());
         }
     }
 
@@ -169,7 +172,7 @@ public class BuildBattleManager implements Cloneable {
         if (buildbattle.getType().getCurrentPhase().getEngine() != null) {
             // Lancer le moteur de la partie
             buildbattle.getType().getCurrentPhase().getEngine().load();
-            // Enregister les évenements propre au moteur de la partie
+            // Enregister les événements propre au moteur de la partie
             buildbattle.getType().getCurrentPhase().getEngine().registerListener();
         }
     }

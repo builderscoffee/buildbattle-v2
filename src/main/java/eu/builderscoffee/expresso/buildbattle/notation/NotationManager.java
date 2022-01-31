@@ -17,7 +17,6 @@ public class NotationManager {
 
     /***
      * Ajouter une valeur à une notation en cache
-     * @param notationType
      */
     public void AddValueToNotation(Notation notation, Notation.NotationType notationType, int value) {
         val cachedValue = notation.getNotes().get(notationType);

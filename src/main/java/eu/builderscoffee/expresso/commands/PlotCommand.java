@@ -36,7 +36,7 @@ public class PlotCommand implements CommandExecutor {
 
     public static boolean argLength1(Player player, String cmd) {
         cmd = cmd.toLowerCase();
-        PlotPlayer plotPlayer = new PlotAPI().wrapPlayer(player.getUniqueId());
+        PlotPlayer<?> plotPlayer = new PlotAPI().wrapPlayer(player.getUniqueId());
         switch (cmd) {
             case "info":
                 // Informations sur le plot

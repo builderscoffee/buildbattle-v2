@@ -10,6 +10,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
 
+/***
+ * Outils @NotationItem
+ * Permet de noter le plot ou le joueur se trouve
+ */
 public class NotationItem extends ToolbarItem {
 
     public NotationItem(int slot) {

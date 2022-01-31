@@ -29,8 +29,7 @@ public abstract class BBPhase {
 
     /**
      * Retourne le nom d'une phase
-     *
-     * @return
+     * @return - Le nom
      */
     public final String getName() {
         return name;
@@ -38,17 +37,15 @@ public abstract class BBPhase {
 
     /**
      * Retourne la description d'une phase
-     *
-     * @return
+     * @return - La liste de lore de la phase
      */
     public final List<String> getDescription() {
         return descriptions;
     }
 
     /**
-     * Retourne l'icon de la phase
-     *
-     * @return
+     * Retourne l'icône de la phase
+     * @return - L'itemstack
      */
     public final ItemStack getIcon() {
         return icons;
@@ -56,8 +53,7 @@ public abstract class BBPhase {
 
     /**
      * Retourne l'unité de temps de la phase
-     *
-     * @return
+     * @return - L'unité de temps
      */
     public final TimeUnit getTimeUnit() {
         return unit;
@@ -65,8 +61,7 @@ public abstract class BBPhase {
 
     /**
      * Retourne l'état de la phase
-     *
-     * @return
+     * @return - L'état de partie
      */
     public final GameState getState() {
         return state;
@@ -74,6 +69,7 @@ public abstract class BBPhase {
 
     /**
      * Retourne le moteur chargé de la partie
+     * @return - Le moteur
      */
     public final BuildBattleEngine getEngine() {
         return engine;
@@ -81,8 +77,6 @@ public abstract class BBPhase {
 
     /**
      * Bukkit runnable de la phase
-     *
-     * @return
      */
     public abstract BukkitRunnable runnable();
 }

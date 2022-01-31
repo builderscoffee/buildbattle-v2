@@ -9,7 +9,6 @@ import eu.builderscoffee.api.common.events.EventHandler;
 import eu.builderscoffee.api.common.redisson.Redis;
 import eu.builderscoffee.commons.common.redisson.topics.CommonTopics;
 import eu.builderscoffee.expresso.buildbattle.BuildBattle;
-import eu.builderscoffee.expresso.buildbattle.config.configs.PlotConfig;
 import eu.builderscoffee.expresso.buildbattle.tasks.BoardTask;
 import eu.builderscoffee.expresso.commands.JuryCommand;
 import eu.builderscoffee.expresso.commands.PlotCommand;
@@ -23,10 +22,9 @@ import eu.builderscoffee.expresso.listeners.bukkit.PlotListener;
 import eu.builderscoffee.expresso.listeners.bukkit.TeamListeners;
 import eu.builderscoffee.expresso.listeners.redisson.ConfigListener;
 import eu.builderscoffee.expresso.listeners.redisson.HeartBeatListener;
-import eu.builderscoffee.expresso.utils.WorldBuilder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.Setter;
-import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Map;
@@ -35,24 +33,29 @@ import static eu.builderscoffee.api.common.configuration.Configuration.readOrCre
 
 public class ExpressoBukkit extends JavaPlugin {
 
+    // Instance
+    @Getter
+    private static ExpressoBukkit instance;
+    @Getter
+    private static BuildBattle buildBattle;
+
+    // Configuration
     @Getter
     public static Map<Profil.Languages, MessageConfiguration> messages;
     @Getter
     public static SettingsConfiguration settings;
     @Getter
     public static CacheConfiguration cache;
+
+    // Manager
     @Getter
     public static InventoryManager inventoryManager;
-    @Getter
-    private static ExpressoBukkit instance;
-    @Getter
-    @Setter
-    private static BuildBattle buildBattle;
     @Getter
     private static ExecutionManager executionManager;
 
     @Override
     public void onEnable() {
+        // Instance
         instance = this;
         buildBattle = new BuildBattle();
 
@@ -61,12 +64,12 @@ public class ExpressoBukkit extends JavaPlugin {
         settings = readOrCreateConfiguration(this.getName(), SettingsConfiguration.class);
         cache = readOrCreateConfiguration(this.getName(), CacheConfiguration.class);
 
-        // Init Task Manager
+        // Manager
         executionManager = new ExecutionManager();
-        // Start Task Manager
+        inventoryManager = BuildersCoffeeAPI.getInvManager();
+
+        // Start Manager
         executionManager.start();
-        // Add Scoreboard Task
-        ExpressoBukkit.getExecutionManager().getTasks().put("board", new BoardTask().runTaskTimer(this, 0L, 20L));
 
         // Register Bukkit Listeners
         Plugins.registerListeners(this, new PlayerListener(), new CompetitorListener(), new TeamListeners(), new PlotListener());
@@ -74,16 +77,13 @@ public class ExpressoBukkit extends JavaPlugin {
         // Register Redis Listeners
         Redis.subscribe(CommonTopics.SERVER_MANAGER, new ConfigListener());
 
-        // Register BuildCoffee EventListeners
+        // Register BuildCoffee Event Listeners
         EventHandler.getInstance().addListener(new HeartBeatListener());
 
         // Register Command Executors
         this.getCommand("jury").setExecutor(new JuryCommand());
         this.getCommand("group").setExecutor(new TeamCommand());
         this.getCommand("eplot").setExecutor(new PlotCommand());
-
-        // Init invt
-        inventoryManager = BuildersCoffeeAPI.getInvManager();
 
     }
 

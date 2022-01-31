@@ -13,9 +13,9 @@ import java.util.function.Function;
 
 public class BaseBoard {
 
-    private static Map<UUID, FastBoard> playerBoards = new HashMap<>();
+    private static final Map<UUID, FastBoard> playerBoards = new HashMap<>();
     @Getter
-    private Map<Class<? extends BBPhase>, Function<Player, List<String>>> boards = new HashMap<>();
+    private final Map<Class<? extends BBPhase>, Function<Player, List<String>>> boards = new HashMap<>();
     private int ipCharIndex;
     private int cooldown;
 
@@ -59,7 +59,7 @@ public class BaseBoard {
      * Retirer tout les scoreboards et nettoyer la map
      */
     public void removeAll() {
-        playerBoards.values().forEach(board -> board.delete());
+        playerBoards.values().forEach(FastBoard::delete);
         playerBoards.clear();
     }
 
@@ -74,7 +74,7 @@ public class BaseBoard {
     /***
      * Retourne un string avec line ligne de séparation
      * et son code couleur
-     * @return - Un string de spération
+     * @return - Un string de séparation
      */
     public String addSeparator() {
         return "§0§8§m----------§8§m------";
@@ -83,7 +83,6 @@ public class BaseBoard {
     /***
      * Retourne un string avec l'ip du serveur
      * et sont code couleur
-     * @return
      */
     public String addIp() {
         return MessageUtils.getDefaultMessageConfig().getBoard().getServerIp();
@@ -99,7 +98,7 @@ public class BaseBoard {
 
         if (ipCharIndex > 0) {
             formattedIp.append(ipString, 0, ipCharIndex - 1);
-            formattedIp.append(ChatColor.YELLOW).append(ipString.substring(ipCharIndex - 1, ipCharIndex));
+            formattedIp.append(ChatColor.YELLOW).append(ipString.charAt(ipCharIndex - 1));
         } else {
             formattedIp.append(ipString, 0, ipCharIndex);
         }

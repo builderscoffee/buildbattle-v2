@@ -1,5 +1,6 @@
 package eu.builderscoffee.expresso;
 
+import eu.builderscoffee.expresso.buildbattle.tasks.BoardTask;
 import lombok.Getter;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -26,7 +27,7 @@ public class ExecutionManager {
      */
     public void start() {
         // Each tick updating
-        //tasks.put("testTask", new TestTask().runTaskTimer(ExpressoBukkit.getInstance(), 0L, 30 * 20));
+        tasks.put("board", new BoardTask().runTaskTimer(ExpressoBukkit.getInstance(), 0L, 20L));
         // Activate ExecutionManager
         active = true;
     }
@@ -36,7 +37,7 @@ public class ExecutionManager {
      */
     public void shutdown() {
         cancelAllTasks();
-        // Desactivate ExecutionManager
+        // Deactivates ExecutionManager
         active = false;
     }
 
@@ -51,6 +52,7 @@ public class ExecutionManager {
 
     /**
      * Cancel a custom tasks
+     *
      * @param task The name of tasks to cancel
      */
     public void cancel(String task) {
@@ -63,6 +65,7 @@ public class ExecutionManager {
 
     /**
      * Get all tasks running
+     *
      * @return Current running tasks list
      */
     public List<BukkitTask> getBukkitTasks() {
