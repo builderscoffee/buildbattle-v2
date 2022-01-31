@@ -42,21 +42,17 @@ public class PlotCommand implements CommandExecutor {
                 // Informations sur le plot
                 if (plotPlayer.getLocation().isPlotArea()) {
                     val messages = MessageUtils.getMessageConfig(player);
-                    if (plotPlayer.getLocation().getPlot().canClaim(plotPlayer)) {
-                        //if (new PlotAPI().getPlot(player.getLocation()).canClaim(UUIDHandler.getPlayer(player.getUniqueId()))) {
+                    if (!plotPlayer.getLocation().getPlot().canClaim(plotPlayer)) {
                         val plot = plotPlayer.getLocation().getPlot();
-                        //val plot = MainUtil.getPlotFromString(PlotPlayer.get(player.getName()), null, false);
-                        String name = new PlotAPI().wrapPlayer(plot.getOwner()).getName();
-                        //String name = MainUtil.getName(plot.owner);
+                        System.out.println("Plot owner " + plot.getOwner());
                         List<String> membersList = new ArrayList<>();
-                        //plot.getMembers().forEach(uuid -> membersList.add(UUIDHandler.getName(uuid)));
                         plot.getMembers().forEach(uuid -> membersList.add(new PlotAPI().wrapPlayer(uuid).getName()));
                         player.sendMessage(messages.getCommand().getPlotInfoHeader());
                         player.sendMessage(messages.getCommand().getPlotInfoId().replace("%id%", String.valueOf(PlotUtils.getPlotsPos(plot))));
-                        player.sendMessage(messages.getCommand().getPlotInfoOwner().replace("%owner%", name));
-                        player.sendMessage(messages.getCommand().getPlotInfoMembers().replace("%members%", membersList.stream()
+                        player.sendMessage(messages.getCommand().getPlotInfoOwner().replace("%owner%", new PlotAPI().wrapPlayer(plot.getOwner()).getName()));
+                        player.sendMessage(messages.getCommand().getPlotInfoMembers().replace("%members%", membersList.size() <= 1 ? membersList.stream()
                                 .map(String::valueOf)
-                                .collect(Collectors.joining(" ,"))));
+                                .collect(Collectors.joining(" ,")) : "Aucun"));
                         player.sendMessage(messages.getCommand().getFooterText());
                     } else {
                         player.sendMessage(messages.getCommand().getPlotNotClaim());
@@ -109,6 +105,7 @@ public class PlotCommand implements CommandExecutor {
 
             case "tpnext":
                 // Get plot
+                //TODO Revoir la méthode de tp
                 Plot plotinvtp = (PlotUtils.convertBukkitLoc(player.getLocation()).getPlotAbs());
                 int b = PlotUtils.getPlotsPos(plotinvtp) + 1;
                 PlotUtils.getPlotsByPos(b).getCenter(location ->

@@ -21,7 +21,7 @@ public class CommandConfigurationPart {
     String plotInfoHeader = "§0§7§m--- §fPlot §0§7§m---";
     String plotInfoId = "§aId: §7 %id%";
     String plotInfoOwner = "§aOwner : §7 %owner%";
-    String plotInfoMembers = "§aMembers : §7 %members";
+    String plotInfoMembers = "§aMembers : §7 %members%";
     String plotNotClaim = "%prefix% §cCe plot n'est pas claim";
     String plotNotIn = "%prefix% §cTu n'est pas sur un plot, espèce de café moulu";
     String plotAlReadyNoted = "§cTu as déjà noté ce plot, espèce de café moulu";

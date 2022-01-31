@@ -2,7 +2,7 @@ package eu.builderscoffee.expresso.buildbattle.phase.bases;
 
 
 import eu.builderscoffee.api.bukkit.utils.ItemBuilder;
-import eu.builderscoffee.api.bukkit.utils.Title;
+import eu.builderscoffee.api.bukkit.utils.NMSPacket;
 import eu.builderscoffee.expresso.ExpressoBukkit;
 import eu.builderscoffee.expresso.buildbattle.BuildBattle;
 import eu.builderscoffee.expresso.buildbattle.GameState;
@@ -63,7 +63,7 @@ public class GamePhase extends BBPhase {
                         @Override
                         public void run() {
                             getOnlinePlayers().forEach(p -> {
-                                new Title(MessageUtils.getMessageConfig(p).getGame().getThemesTitle(), ExpressoBukkit.getBuildBattle().getGameManager().getTheme(), 20, 20, 20).send(p);
+                                new NMSPacket.Title(MessageUtils.getMessageConfig(p).getGame().getThemesTitle(), ExpressoBukkit.getBuildBattle().getGameManager().getTheme(), 20, 20, 20).send(p);
                                 p.setGameMode(CREATIVE);
                             });
                         }
@@ -80,7 +80,7 @@ public class GamePhase extends BBPhase {
 
                 // Tout les X temps envoyé un title pour la dernière minute restante
                 Arrays.stream(titleTime).filter(i -> i == currentTime).forEach(i -> getOnlinePlayers().forEach(p -> {
-                    new Title(MessageUtils.getMessageConfig(p).getGame().getRemainingTime(), TimeUtils.getDurationString(time - currentTime), 20, 5, 20).send(p);
+                    new NMSPacket.Title(MessageUtils.getMessageConfig(p).getGame().getRemainingTime(), TimeUtils.getDurationString(time - currentTime), 20, 5, 20).send(p);
                 }));
 
                 // Passer à l'étape suivante si le temps est écoulé
