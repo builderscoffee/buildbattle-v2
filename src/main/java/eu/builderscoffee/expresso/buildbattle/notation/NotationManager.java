@@ -65,4 +65,6 @@ public class NotationManager {
         }
         return false;
     }
+
+    //public int getNotationDone()
 }

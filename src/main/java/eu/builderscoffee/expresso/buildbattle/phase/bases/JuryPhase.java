@@ -51,6 +51,8 @@ public class JuryPhase extends BBPhase {
 
                 // Ajouter la toolbar au jury
                 ExpressoBukkit.getBuildBattle().getJurors().forEach(jury -> ExpressoBukkit.getBuildBattle().getToolbarManager().addToolBar(jury, ToolbarManager.Toolbars.JURORS));
+
+                //TODO Checker l'avancement des notations et en déduire un pourcentage ?
             }
         };
     }
